@@ -1,0 +1,45 @@
+
+<%= form_for ride do |f| %>
+	<%= render 'layouts/error_messages', object: ride %>
+
+	<%= content_tag :div, class: "row" do %>
+		<%= content_tag :div, class: "large-4 large-offset-2 columns" do %>
+			<%= f.label :from_address %>
+			<%= f.text_field :from_address, required: true %>
+		<% end %>
+	<% end %>
+
+	<%= content_tag :div, class: "row" do %>
+		<%= content_tag :div, class: "large-4 large-offset-2 columns" do %>
+			<%= f.label :to_address %>
+			<%= f.text_field :to_address, required: true %>
+		<% end %>
+	<% end %>
+
+	<%= content_tag :div, class: "row" do %>
+		<%= content_tag :div, class: "large-4 large-offset-2 columns" do %>
+			<%= f.label :timeofride %>
+			<%= f.text_field :timeofride, autocomplete: "off", class: "datetimepicker", required: true, readonly: true %>
+		<% end %>
+	<% end %>
+
+	<%= content_tag :div, class: "row" do %>
+		<%= content_tag :div, class: "large-4 large-offset-2 columns" do %>
+			<%= f.label :car_description, "Car Description", required: true %>
+			<%= f.text_area :car_description %>
+		<% end %>
+	<% end %>
+
+	<%= content_tag :div, class: "row" do %>
+		<%= content_tag :div, class: "large-4 large-offset-2 columns" do %>
+			<%= f.label :seats_available, "# of Passenger seats available" %>
+			<%= f.number_field :seats_available, max: "5", min: "0", required: true %>
+		<% end %>
+	<% end %>
+
+	<%= content_tag :div, class: "row" do %>
+		<%= content_tag :div, class: "large-4 large-offset-2 columns" do %>
+			<%= f.submit (ride.new_record? ? "Register" : "Update Ride"), class: "tiny button" %>
+		<% end %>
+	<% end %>
+<% end %>

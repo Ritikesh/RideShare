@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  from_address: MyString
+  from_latitude: 1.5
+  from_longitude: 1.5
+  to_address: MyString
+  to_latitude: 1.5
+  to_longitude: 1.5
+  timeofride: 2015-05-12 18:02:23
+  car_description: MyString
+  seats_available: 1
+
+two:
+  from_address: MyString
+  from_latitude: 1.5
+  from_longitude: 1.5
+  to_address: MyString
+  to_latitude: 1.5
+  to_longitude: 1.5
+  timeofride: 2015-05-12 18:02:23
+  car_description: MyString
+  seats_available: 1

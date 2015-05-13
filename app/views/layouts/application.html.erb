@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title><%= title yield(:title) %></title>
+    <%= favicon_link_tag "favicon.ico" %>
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "vendor/modernizr" %>
+    <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <%= render 'layouts/shim' %>
+  </head>
+
+  <body> 
+    <%= render 'layouts/header' %>
+    <% if content_for?(:heading) %>
+      <h3><%= yield(:heading) %></h3>
+    <% end %>
+    <% unless flash.empty? %>
+      <div class="row">
+        <div class="large-6 large-centered columns">
+          <% flash.each do |key, value| %>
+            <%= content_tag :div, data: { alert: '' }, class: "alert-box #{key}" do %>
+              <span><%= value %></span>
+              <a href="#" class="close">&times;</a>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <%= yield %>
+    <%= render 'layouts/footer' %>
+    <%= debug(params) if Rails.env.development? %>
+  </body>
+</html>

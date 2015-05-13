@@ -1,0 +1,38 @@
+<%= form_for user do |f| %>
+	<%= render 'layouts/error_messages', object: user %>
+
+	<%= content_tag :div, class: "row" do %>
+		<%= content_tag :div, class: "large-4 large-offset-2 columns" do %>
+			<%= f.label :name %>
+			<%= f.text_field :name, required: true  %>
+		<% end %>
+	<% end %>
+
+	<%= content_tag :div, class: "row" do %>
+		<%= content_tag :div, class: "large-4 large-offset-2 columns" do %>
+			<%= f.label :email %>
+			<%= f.email_field :email, required: true  %>
+		<% end %>
+	<% end %>
+
+	<% if user.new_record? %>
+		<%= content_tag :div, class: "row" do %>
+			<%= content_tag :div, class: "large-4 large-offset-2 columns" do %>
+				<%= f.label :password %>
+				<%= f.password_field :password, required: true  %>
+			<% end %>
+		<% end %>
+
+		<%= content_tag :div, class: "row" do %>
+			<%= content_tag :div, class: "large-4 large-offset-2 columns" do %>
+				<%= f.label :password_confirmation, "Confirm Password" %>
+				<%= f.password_field :password_confirmation, required: true  %>
+			<% end %>
+		<% end %>
+	<% end %>
+	<%= content_tag :div, class: "row" do %>
+		<%= content_tag :div, class: "large-4 large-offset-2 columns" do %>
+			<%= f.submit (user.new_record? ? "Register" : "Update Profile"), class: "tiny button" %>
+		<% end %>
+	<% end %>
+<% end %>

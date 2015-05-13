@@ -1,0 +1,26 @@
+<% content_for :title, "Signin" %>
+<% content_for :heading, "Signin" %>
+
+<%= form_for @user, url: user_session_path do |f| %>  
+	<%= render 'layouts/error_messages', object: @user %>
+	<%= content_tag :div, class: "row" do %>
+		<%= content_tag :div, class: "large-4 large-offset-2 columns" do %>
+			<%= f.label :email %>
+			<%= f.email_field :email %>
+		<% end %>
+	<% end %>
+
+	<%= content_tag :div, class: "row" do %>
+		<%= content_tag :div, class: "large-4 large-offset-2 columns" do %>
+			<%= f.label :password %>
+			<%= f.password_field :password %>
+		<% end %>
+	<% end %>		
+
+  	
+	<%= content_tag :div, class: "row" do %>
+		<%= content_tag :div, class: "large-4 large-offset-2 columns" do %>
+			<%= f.submit "Signin", class: "tiny button" %>
+		<% end %>
+	<% end %>
+<% end %>
