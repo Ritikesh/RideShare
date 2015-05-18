@@ -47,7 +47,8 @@
 		<%= content_tag :div, class: "row" do %>
 			<%= content_tag :div, class: "large-10 columns" do %>
 				<%= f.submit (@ride.new_record? ? "Register" : "Update Ride"), class: "tiny radius button", disabled: true %>
-				<button type="button" class="button radius tiny" id="updateMarkers">Update Markers </button>
+				<button type="button" disabled class="button radius tiny" id="updateMarkers">Update Markers </button>
+				<button type="button" disabled id="getRoute" class="button radius tiny">Get Route</button>
 			<% end %>
 		<% end %>
 		<%= f.hidden_field :from_latitude %>
@@ -72,16 +73,24 @@
 	});
 
 	//update address on 'drag-end'
-
+	//change by using 2 constant markers and updating them only on dragend
 	function updateAddress(marker, element)
 	{
 		GMaps.geocode({
 			latLng: marker.getPosition(),
 			callback: function(results, status) {
+				var text = "From: ";
+				if(element == "#ride_to_address")
+					text = "To: ";
+				
 				if (status == 'OK') {
-					marker.infoWindow.content = results[0].formatted_address;
+					marker.infoWindow.close();
+					marker.infoWindow = new google.maps.InfoWindow({
+					  	content: text + results[0].formatted_address
+					});
+					marker.infoWindow.open(marker.get('map'), marker);
 					var latlng = results[0].geometry.location;
-					$(element).val(marker.infoWindow.content);
+					$(element).val(results[0].formatted_address);
 					if(element == "#ride_to_address")
 					{
 						$("#ride_to_latitude").val(latlng.lat());
@@ -93,6 +102,10 @@
 			      		$("#ride_from_longitude").val(latlng.lng());
 					}
 				}
+				if($("#updateMarkers").attr("disabled"))
+					$("#updateMarkers").removeAttr("disabled");
+				if($("#getRoute").attr("disabled"))
+					$("#getRoute").removeAttr("disabled");	
 			}
 		});
 	}
@@ -110,7 +123,7 @@
 	<% if @ride.new_record? %>
 		GMaps.geolocate({
 			success: function(position) {
-				//map.setCenter(position.coords.latitude, position.coords.longitude);
+				map.setCenter(position.coords.latitude, position.coords.longitude);
 				//bounds.push(new google.maps.LatLng(position.coords.latitude, position.coords.latitude))
 				$("#alert-text").html("Location determined! Add addresses and update markers to view them on map. You can move them around too!");
 			},
@@ -156,7 +169,7 @@
 		bounds.push(new google.maps.LatLng(<%= @ride.from_latitude %>, <%= @ride.from_longitude %>));
 		bounds.push(new google.maps.LatLng(<%= @ride.to_latitude %>, <%= @ride.to_longitude %>));
 		map.fitLatLngBounds(bounds);
-		$("#alert-text").append("Kindly update markers to avoid outdated data submission.")
+		$("#alert-text").append("Kindly update markers to avoid outdated data submission.");
 		$("#box-alert").css("visibility","initial");
 		$("input[type='submit']").removeAttr("disabled");
 	<% end %>
@@ -166,6 +179,13 @@
 	// $("#new_ride").on('submit',function(){
 		
 	// });
+
+	$("#ride_from_address, #ride_to_address").change(function(){
+		if($("#updateMarkers").attr("disabled"))
+			$("#updateMarkers").removeAttr("disabled");
+		if($("#getRoute").attr("disabled"))
+			$("#getRoute").removeAttr("disabled");	
+	});
 
 	//update the markers
 
@@ -232,11 +252,37 @@
 		        fitToBounds(bounds);
 			  }
 			});
+		$("#getRoute").removeAttr("disabled");
 		}
 		else
 		{
 			$("#alert-text").html("From and To address are required for markers to be updated on the Map.");
 			$("#box-alert").css("visibility","initial");
 		}
+	});
+	$("#getRoute").click(function(){
+		var path = [];
+		if(map.markers.length < 2)
+			$("#updateMarkers").click();
+        map.getRoutes({
+            origin: [$("#ride_from_latitude").val(), $("#ride_from_longitude").val()],
+			destination: [$("#ride_to_latitude").val(), $("#ride_to_longitude").val()],
+			callback: function (e) {
+                for (i=0; i<e[0].legs.length; i++) {
+                    for(j=0; j<e[0].legs[i].steps.length; j++) {
+                    	for(k=0; k<e[0].legs[i].steps[j].path.length; k++) {
+                    		path.push(e[0].legs[i].steps[j].path[k]);
+                    	}
+                    }
+                }
+                map.drawPolyline({
+					path: path,
+					strokeColor: '#131540',
+					strokeOpacity: 0.6,
+					strokeWeight: 6
+				});  
+				console.log(path.toString());
+            }
+        });
 	});
 </script>
