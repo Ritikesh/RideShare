@@ -1,2 +1,14 @@
-<h1> Show </h1>
-<%= @user.name %>
+<% content_for :title, @user.name %>
+<% content_for :heading, "Profile - " + @user.name %>
+<div class="row margin-top">
+	<div class="columns large-6">
+		<%= gravatar_for @user, 150 %>	
+		<span>
+			<%= @user.name %>
+			&lt;<%= @user.email %>&gt;
+		</span>
+	</div>
+	<div class="columns large-4 large-offset-2">
+		<%= render 'rides/stats' %>
+	</div>
+</div>

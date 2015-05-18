@@ -1,45 +1,242 @@
+<div class="row">
+	<div id="box-alert" class="alert-box columns large-8 large-centered info" style="visibility:hidden;" data-alert>
+		<span id="alert-text" class="subheader"></span>
+	</div>
+	
+</div>
+<div class="row">
+	<div class="large-6 columns">
+	<%= form_for @ride do |f| %>
+		<%= render 'layouts/error_messages', object: @ride %>
 
-<%= form_for ride do |f| %>
-	<%= render 'layouts/error_messages', object: ride %>
-
-	<%= content_tag :div, class: "row" do %>
-		<%= content_tag :div, class: "large-4 large-offset-2 columns" do %>
-			<%= f.label :from_address %>
-			<%= f.text_field :from_address, required: true %>
+		<%= content_tag :div, class: "row" do %>
+			<%= content_tag :div, class: "large-10 columns" do %>
+				<%= f.label :from_address %>
+				<%= f.text_field :from_address, required: true %>
+			<% end %>
 		<% end %>
+
+		<%= content_tag :div, class: "row" do %>
+			<%= content_tag :div, class: "large-10 columns" do %>
+				<%= f.label :to_address %>
+				<%= f.text_field :to_address, required: true %>
+			<% end %>
+		<% end %>
+
+		<%= content_tag :div, class: "row" do %>
+			<%= content_tag :div, class: "large-10 columns" do %>
+				<%= f.label :timeofride %>
+				<%= f.text_field :timeofride, autocomplete: "off", class: "datetimepicker", required: true, readonly: true, value: (@ride.timeofride) ? @ride.timeofride.to_time.strftime("%d-%m-%Y %H:%M") : "" %>
+			<% end %>
+		<% end %>
+
+		<%= content_tag :div, class: "row" do %>
+			<%= content_tag :div, class: "large-10 columns" do %>
+				<%= f.label :car_description, "Car Description", required: true %>
+				<%= f.text_area :car_description %>
+			<% end %>
+		<% end %>
+
+		<%= content_tag :div, class: "row" do %>
+			<%= content_tag :div, class: "large-10 columns" do %>
+				<%= f.label :seats_available, "# of Passenger seats available" %>
+				<%= f.number_field :seats_available, max: "10", min: "1", required: true %>
+			<% end %>
+		<% end %>
+
+		<%= content_tag :div, class: "row" do %>
+			<%= content_tag :div, class: "large-10 columns" do %>
+				<%= f.submit (@ride.new_record? ? "Register" : "Update Ride"), class: "tiny radius button", disabled: true %>
+				<button type="button" class="button radius tiny" id="updateMarkers">Update Markers </button>
+			<% end %>
+		<% end %>
+		<%= f.hidden_field :from_latitude %>
+		<%= f.hidden_field :from_longitude %>
+		<%= f.hidden_field :to_latitude %>
+		<%= f.hidden_field :to_longitude %>
+	<% end %>
+	</div>
+	<div class="large-6 columns margin-top">
+		<div id="map" style='width: 600px; height: 400px;'></div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var bounds = [];
+
+	// initialize map
+	var map = new GMaps({
+		div: '#map',
+        lat: <%= @ride.from_latitude ? @ride.from_latitude : 13.0826802 %>,
+        lng: <%= @ride.from_longitude ? @ride.from_longitude : 80.27071840000008 %>
+	});
+
+	//update address on 'drag-end'
+
+	function updateAddress(marker, element)
+	{
+		GMaps.geocode({
+			latLng: marker.getPosition(),
+			callback: function(results, status) {
+				if (status == 'OK') {
+					marker.infoWindow.content = results[0].formatted_address;
+					var latlng = results[0].geometry.location;
+					$(element).val(marker.infoWindow.content);
+					if(element == "#ride_to_address")
+					{
+						$("#ride_to_latitude").val(latlng.lat());
+			      		$("#ride_to_longitude").val(latlng.lng());
+					}
+					else
+					{
+						$("#ride_from_latitude").val(latlng.lat());
+			      		$("#ride_from_longitude").val(latlng.lng());
+					}
+				}
+			}
+		});
+	}
+
+	//to fit markers after they're loaded
+
+	function fitToBounds(bounds){
+		map.fitLatLngBounds(bounds);
+		$("input[type='submit']").removeAttr("disabled");
+		$("#box-alert").css("visibility","hidden");
+	}
+
+	//if new ride, use geolocation
+
+	<% if @ride.new_record? %>
+		GMaps.geolocate({
+			success: function(position) {
+				//map.setCenter(position.coords.latitude, position.coords.longitude);
+				//bounds.push(new google.maps.LatLng(position.coords.latitude, position.coords.latitude))
+				$("#alert-text").html("Location determined! Add addresses and update markers to view them on map. You can move them around too!");
+			},
+			error: function(error) {
+				$("#alert-text").html('Geolocation failed: '+error.message +". Add addresses and update markers to view them on map. You can move them around too!");
+			},
+			not_supported: function() {
+				$("#alert-text").html("Allow the site to 'Auto-detect' your location or Add addresses and update markers to view them on map. You can move them around too!");
+			},
+			always: function() {
+				$("#alert-text").append("<br>PS: Kindly update markers to avoid outdated data submission.")
+				$("#box-alert").css("visibility","initial");
+			}
+		});
 	<% end %>
 
-	<%= content_tag :div, class: "row" do %>
-		<%= content_tag :div, class: "large-4 large-offset-2 columns" do %>
-			<%= f.label :to_address %>
-			<%= f.text_field :to_address, required: true %>
-		<% end %>
+	//if edit, use existing locations to fill map with markers
+	
+	<% unless @ride.new_record? %>
+		map.addMarker({
+	        lat: <%= @ride.from_latitude %>,
+	        lng: <%= @ride.from_longitude %>,
+			infoWindow: {
+				content: 'From: <%= @ride.from_address %>'
+			},
+  			draggable: true,
+			dragend: function(e) {
+				updateAddress(this, "#ride_from_address");
+			}
+		});
+		map.addMarker({
+	        lat: <%= @ride.to_latitude %>,
+	        lng: <%= @ride.to_longitude %>,
+			infoWindow: {
+				content: 'To: <%= @ride.to_address %>'
+			},
+  			draggable: true,
+			dragend: function(e) {
+				updateAddress(this, "#ride_to_address");
+			}
+		});
+		
+		bounds.push(new google.maps.LatLng(<%= @ride.from_latitude %>, <%= @ride.from_longitude %>));
+		bounds.push(new google.maps.LatLng(<%= @ride.to_latitude %>, <%= @ride.to_longitude %>));
+		map.fitLatLngBounds(bounds);
+		$("#alert-text").append("Kindly update markers to avoid outdated data submission.")
+		$("#box-alert").css("visibility","initial");
+		$("input[type='submit']").removeAttr("disabled");
 	<% end %>
 
-	<%= content_tag :div, class: "row" do %>
-		<%= content_tag :div, class: "large-4 large-offset-2 columns" do %>
-			<%= f.label :timeofride %>
-			<%= f.text_field :timeofride, autocomplete: "off", class: "datetimepicker", required: true, readonly: true %>
-		<% end %>
-	<% end %>
+	//before submit, update markers - waste of API calls
 
-	<%= content_tag :div, class: "row" do %>
-		<%= content_tag :div, class: "large-4 large-offset-2 columns" do %>
-			<%= f.label :car_description, "Car Description", required: true %>
-			<%= f.text_area :car_description %>
-		<% end %>
-	<% end %>
+	// $("#new_ride").on('submit',function(){
+		
+	// });
 
-	<%= content_tag :div, class: "row" do %>
-		<%= content_tag :div, class: "large-4 large-offset-2 columns" do %>
-			<%= f.label :seats_available, "# of Passenger seats available" %>
-			<%= f.number_field :seats_available, max: "5", min: "0", required: true %>
-		<% end %>
-	<% end %>
+	//update the markers
 
-	<%= content_tag :div, class: "row" do %>
-		<%= content_tag :div, class: "large-4 large-offset-2 columns" do %>
-			<%= f.submit (ride.new_record? ? "Register" : "Update Ride"), class: "tiny button" %>
-		<% end %>
-	<% end %>
-<% end %>
+	$("#updateMarkers").click(function(){
+		if($('#ride_from_address').val() && $('#ride_to_address').val())
+		{
+			bounds.length = 0; //clear the array
+			map.removeMarkers(); //clear the map
+			
+			GMaps.geocode({
+			  address: $('#ride_from_address').val(),
+			  callback: function(results, status) {
+			    
+			    if (status == 'OK') {
+			      var latlng = results[0].geometry.location;
+			      bounds.push(new google.maps.LatLng(latlng.lat(), latlng.lng()));
+			      
+			      $("#ride_from_latitude").val(latlng.lat());
+			      $("#ride_from_longitude").val(latlng.lng());
+			      
+			      map.addMarker({
+			        lat: latlng.lat(),
+			        lng: latlng.lng(),
+					infoWindow: {
+						content: "From:" + $("#ride_from_address").val()
+					},
+		  			draggable: true,
+					dragend: function(e) {
+						updateAddress(this, "#ride_from_address");
+					}
+			      });
+			    }
+
+			    // fit markers after callback
+		        fitToBounds(bounds);
+			  }
+			});
+
+			GMaps.geocode({
+			  address: $('#ride_to_address').val(),
+			  callback: function(results, status) {
+			    
+			    if (status == 'OK') {
+			      var latlng = results[0].geometry.location;
+			      bounds.push(new google.maps.LatLng(latlng.lat(), latlng.lng()));
+			      
+			      $("#ride_to_latitude").val(latlng.lat());
+			      $("#ride_to_longitude").val(latlng.lng());
+			      
+			      map.addMarker({
+			        lat: latlng.lat(),
+			        lng: latlng.lng(),
+					infoWindow: {
+						content: "To:" + $("#ride_to_address").val()
+					},
+		  			draggable: true,
+					dragend: function(e) {
+						updateAddress(this, "#ride_to_address");
+					}
+			      });
+			    }
+
+			    // fit markers after callback
+		        fitToBounds(bounds);
+			  }
+			});
+		}
+		else
+		{
+			$("#alert-text").html("From and To address are required for markers to be updated on the Map.");
+			$("#box-alert").css("visibility","initial");
+		}
+	});
+</script>

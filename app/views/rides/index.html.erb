@@ -1,26 +1,21 @@
-<% content_for :title, "Home" %>
-<% content_for :heading, "Welcome" %>
-
-<div class="row">
-	<div id="homeImage" class="columns large-centered small-centered medium-centered"> </div>
-</div>
-
+<% content_for :title, "My Rides" %>
+<% content_for :heading, "My Rides" %>
 <div class="row">
 	<% if @rides.empty? %>
 		<div class="columns large-6 large-centered">
 			<div class="callout panel radius">
 				<p class="text-center"><i class="fi-burst large"></i> Snap! <i class="fi-burst large"></i></p>
-				There are no rides posted, YET! You can be the first to..,
+				You have not posted a ride, YET! There's always a first time.., 
 				<%= link_to "Post Ride", new_ride_path, class: "button tiny primary" %>
 			</div>
 		</div>
 	<% else %>
 		<div class="columns large-4">
-			<%= render 'rides/stats' %>
+			<%= render 'stats' %>
 		</div>
 		<div class="columns large-7 page large-offset-1">
 			<% @rides.each do | ride | %>
-				<%= render 'rides/ride', ride: ride %>
+				<%= render 'ride', ride: ride %>
 			<% end %>
 		</div>
 	<% end %>

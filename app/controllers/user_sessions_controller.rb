@@ -7,7 +7,7 @@ class UserSessionsController < ApplicationController
     @user_session = UserSession.new params.require(:user)
       .permit(:email, :password)
     if @user_session.save
-      redirect_to root_path
+      redirect_back_or_default root_path
     else
       redirect_to login_path
     end

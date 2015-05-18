@@ -11,13 +11,27 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require foundation
 //= require turbolinks
 //= require jquery.datetimepicker
+//= require gmaps
 //= require_tree .
 
 $(function(){ $(document).foundation(); });
+
 $(document).ready(function() {
-	$('.datetimepicker').datetimepicker();	
+	$('.datetimepicker').datetimepicker({
+		format:'d-m-Y H:i'
+	});
+
+	$('.ride-delete').bind('ajax:beforeSend', function() {
+		//$('#mySpinner').show();
+	});
+
+	$('.ride-delete').bind('ajax:complete', function(data) {
+		//$('#mySpinner').hide();
+		$(this).parent(".panel").hide();
+	});
 });

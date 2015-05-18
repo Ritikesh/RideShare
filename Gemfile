@@ -16,10 +16,7 @@ gem 'authlogic', '3.4.5'
 gem 'foundation-rails', '5.5.2.1'
 gem 'foundation-icons-sass-rails', '3.0.0'
 gem 'jquery-datetimepicker-rails', '2.4.1.0'
-gem 'geocoder', '1.2.8'
-
-gem 'gmaps4rails', '2.1.2'
-
+gem 'jquery-turbolinks', '2.1.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
