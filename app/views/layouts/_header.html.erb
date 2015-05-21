@@ -13,10 +13,20 @@
       <ul class="right">
       <% if current_user %>
         <li> <%= link_to ("<i class='fi-plus'></i>").html_safe, new_ride_path, {title: "Post ride"} %></li> 
-        <li> <%= link_to ("<i class='fi-list-thumbnails'></i>").html_safe, rides_path, {title: "Book a ride"} %></li> 
+        <li> <%= link_to ("<i class='fi-list-thumbnails'></i>").html_safe, rides_path, {title: "My Posted Rides"} %></li> 
         <li class="divider"> </li>
-        <li> <%= link_to current_user.name, account_path, {title: "View Profile"} %> </li>
-        <li> <%= link_to ("<i class='fi-page-export'></i>").html_safe, logout_path, {title: "Logout"} %> </li>
+        <li> <%= link_to ("<i class='fi-plus'></i>").html_safe, new_ride_transaction_path, {title: "Book ride"} %></li> 
+        <li> <%= link_to ("<i class='fi-thumbnails'></i>").html_safe, ride_transactions_path, {title: "My Booked Rides"} %></li> 
+        <li class="divider"> </li>
+        
+        <li class="has-dropdown"> 
+          <a href="#"><%= current_user.name %></a>
+          <ul class="dropdown">
+            <li> <%= link_to "Account", account_path %> </li>
+            <li> <%= link_to "Settings", edit_account_path %> </li>
+            <li> <%= link_to "Logout", logout_path, {title: "Logout"} %> </li>
+          </ul>
+        </li>
       <% else %>
         <li> <%= link_to ("<i class='fi-torsos'></i>").html_safe, new_user_path, {title: "Register"} %> </li>
         <li> <%= link_to ("<i class='fi-torso'></i>").html_safe, login_path, {title: "Login"} %> </li>

@@ -3,7 +3,9 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
 	protect_from_forgery with: :exception
 	helper_method :current_user_session, :current_user, :require_user, :require_no_user,
-		:redirect_back_or_default, :store_location, :inactive_count, :completed_count, :future_count
+		:redirect_back_or_default, :store_location, :inactive_count, :completed_count, 
+		:future_count, :future_transaction_count, :completed_transaction_count, 
+		:rides, :rides_for_transaction
 
 	private
 	    def current_user_session
@@ -46,7 +48,7 @@ class ApplicationController < ActionController::Base
 		def inactive_count(userid = nil)
 	      	if userid
 	      		Ride.where(["isactive = :t and user_id = :u",
-	          		{t: false, u: (userid)}]).count
+	          		{t: false, u: userid}]).count
 	      	else
 	      		Ride.where(["isactive = :t", {t: false}]).count
 	      	end
@@ -55,19 +57,48 @@ class ApplicationController < ActionController::Base
 	    def future_count(userid = nil)
 	    	if userid
 	      		Ride.where(["isactive = :t and user_id = :u and timeofride > :v", 
-	          		{t: true, u: (userid), v: Time.now}]).count
-	      	# else
-	      	# 	Ride.where(["isactive = :t and timeofride > :u", 
-	      	# 		{t: true, u: Time.now}]).count
+	          		{t: true, u: userid, v: Time.now}]).count
+	      	else
+	      		Ride.where(["isactive = :t and timeofride > :u", 
+	      			{t: true, u: Time.now}]).count
 	      	end
 	    end
 
 	    def completed_count(userid = nil)
 	    	if userid
 	      		Ride.where(["isactive = :t and user_id = :u and timeofride < :v", 
-        	  		{t: true, u: (userid), v: Time.now}]).count
+        	  		{t: true, u: userid, v: Time.now}]).count
 	      	else
 	      		Ride.where(["isactive = :t and timeofride < :u", 
+	      			{t: true, u: Time.now}]).count
+	      	end
+	    end
+
+		def inactive_transaction_count(userid = nil)
+	      	if userid
+	      		RideTransaction.where(["isactive = :t and user_id = :u",
+	          		{t: false, u: userid}]).count
+	      	else
+	      		RideTransaction.where(["isactive = :t", {t: false}]).count
+	      	end
+	    end
+
+	    def future_transaction_count(userid = nil)
+	    	if userid
+	      		RideTransaction.where(["isactive = :t and user_id = :u and timeofride > :v", 
+	          		{t: true, u: userid, v: Time.now}]).count
+	      	else
+	      		RideTransaction.where(["isactive = :t and timeofride > :u", 
+	      			{t: true, u: Time.now}]).count
+	      	end
+	    end
+
+	    def completed_transaction_count(userid = nil)
+	    	if userid
+	      		RideTransaction.where(["isactive = :t and user_id = :u and timeofride < :v", 
+        	  		{t: true, u: userid, v: Time.now}]).count
+	      	else
+	      		RideTransaction.where(["isactive = :t and timeofride < :u", 
 	      			{t: true, u: Time.now}]).count
 	      	end
 	    end
@@ -75,12 +106,23 @@ class ApplicationController < ActionController::Base
 	    def rides(userid = nil)
 	    	if userid
 	    		rides = Ride.eager_load(:user).where(["isactive = :t and user_id = :u", 
-          	  		{t: true, u: userid}]).order(:timeofride)
+          	  		{t: true, u: userid}]).order(timeofride: :desc)
 	    	else
-    			rides = Ride.eager_load(:user).where("isactive = :t and timeofride > :u ",
-					{t: true, u:Time.now}).order(:timeofride)
+    			rides = Ride.eager_load(:user).where("isactive = :t and timeofride > :u and seats_remaining > :v",
+					{t: true, u:Time.now, v: 0}).order(:timeofride)
 	    		# rides = Ride.where(["isactive = :t and timeofride > :v", 
 	    		# 	{t: true, v: Time.now}])
+	    	end
+	    end
+
+	    def rides_for_transaction(userid = nil)
+	    	if userid
+	    		rides = Ride.eager_load(:user).where(["isactive = :t and user_id <> :u and 
+	    			timeofride > :v and seats_remaining > :w", 
+          	  		{t: true, u: userid, v:Time.now, w: 0}]).order(timeofride: :desc)
+	    	else
+    			rides = Ride.eager_load(:user).where("isactive = :t and timeofride > :u and seats_remaining > :v",
+					{t: true, u:Time.now, v: 0}).order(:timeofride)
 	    	end
 	    end
 end 

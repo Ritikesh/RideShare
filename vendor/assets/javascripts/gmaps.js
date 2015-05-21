@@ -1356,7 +1356,7 @@ GMaps.prototype.getRoutes = function(options) {
       }
 
       if (options.callback) {
-        options.callback(self.routes);
+        options.callback(result.routes);
       }
     }
     else {

@@ -17,10 +17,14 @@ class UsersController < ApplicationController
   end
   
   def show
-    @user = current_user
-    @completed_count = completed_count current_user.id
-    @future_count = future_count current_user.id
-    @inactive_count = inactive_count current_user.id
+    @user = current_user unless params[:id]
+    params[:id] = current_user.id unless params[:id]
+
+    @user = User.find(params[:id]) unless @user
+
+    @completed_count = completed_count params[:id]
+    @future_count = future_count params[:id]
+    @inactive_count = inactive_count params[:id]
   end
 
   def edit

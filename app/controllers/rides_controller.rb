@@ -19,6 +19,10 @@ class RidesController < ApplicationController
 
   def edit
     @ride = Ride.find_by_id(params[:id])
+    unless @ride.isactive
+      flash[:info] = "This ride has been canceled by you!"
+      redirect_to root_path
+    end
   end
 
   def update

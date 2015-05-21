@@ -4,43 +4,51 @@
 <script>
 	var map = new GMaps({
 		div: '#map',
-		lat: -12.043333,
-		lng: -77.028333
+		lat: 12.9914,
+		lng: 80.2742
 	});
-	var latlng = new google.maps.LatLng(-12.043333, -77.028333);
+	var latlng1 = new google.maps.LatLng(13.02, 80.228);
+	var latlng2 = new google.maps.LatLng(13.0836, 80.2742);
 
-	GMaps.geocode({
-	  latLng: latlng,
-	  callback: function(results, status) {
-	    console.log(results[0].address_components[4].long_name);
-	    if (status == 'OK') {
-          var latlng = results[0].geometry.location;
-	      map.addMarker({
-	        lat: latlng.lat(),
-	        lng: latlng.lng(),
-			infoWindow: {
-				content: results[0].formatted_address
-			}
-	      });
-	    }
-	   }
+	map.addMarker({
+	    lat: latlng1.lat(),
+	    lng: latlng1.lng(),
+		title: 'Lima'
 	});
-	//results[0].geometry.location;
-  //   GMaps.geocode({'latLng': latlng}, function(results, status) {
-	 //    if (status == google.maps.GeocoderStatus.OK) {
-	 //      if (results[1]) {
-	 //        map.setZoom(11);
-	 //        marker = new google.maps.Marker({
-	 //            position: latlng,
-	 //            map: map
-	 //        });
-	 //        infowindow.setContent(results[1].formatted_address);
-	 //        infowindow.open(map, marker);
-	 //      } else {
-	 //        alert('No results found');
-	 //      }
-	 //    } else {
-	 //      alert('Geocoder failed due to: ' + status);
-	 //    }
-	 // });
+	// map.drawRoute({
+	// 	origin: [12.9914, 80.2165],
+	// 	destination: [13.0836, 80.2742],
+	// 	travelMode: 'driving',
+	// 	strokeColor: '#131540',
+	// 	strokeOpacity: 0.6,
+	// 	strokeWeight: 6
+	// });
+	
+	path = [];
+	var line;
+	map.getRoutes({
+	    origin: [12.9914, 80.2165],
+		destination: [13.0836, 80.2742],
+		callback: function (e) {
+	        for (i=0; i<e[0].legs.length; i++) {
+	            for(j=0; j<e[0].legs[i].steps.length; j++) {
+	            	for(k=0; k<e[0].legs[i].steps[j].path.length; k++) {
+	            		path.push(e[0].legs[i].steps[j].path[k]);
+	            	}
+	            }
+	        }
+	        // line = new google.maps.Polyline({
+	        // 	path: [
+	        // 		new google.maps.LatLng(12.9914, 80.2165),
+	        // 		new google.maps.LatLng(13.0836, 80.2742)
+	        // 	]
+	        // });
+
+	        console.log(path);
+			line = map.drawPolyline({
+				path: path
+			});  
+			console.log(google.maps.geometry.poly.isLocationOnEdge(latlng1, line, 0.020));
+	    }
+	});
 </script>

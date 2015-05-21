@@ -1,0 +1,22 @@
+<% content_for :title, "Booked Rides" %>
+<% content_for :heading, "My Booked Rides" %>
+<div class="row margin-top">
+	<% if @ride_transactions.empty? %>
+		<div class="columns large-6 large-centered">
+			<div class="callout panel radius">
+				<p class="text-center"><i class="fi-burst large"></i> Snap! <i class="fi-burst large"></i></p>
+				You have not booked a ride, YET! There's always a first time.., 
+				<%= link_to "Book Ride", new_ride_transaction_path, class: "button tiny primary" %>
+			</div>
+		</div>
+	<% else %>
+		<div class="columns large-4">
+			<%= render 'stats' %>
+		</div>
+		<div class="columns large-6 page large-offset-2">
+			<% @ride_transactions.each do | ride_transaction | %>
+				<%= render 'ride_transaction', ride_transaction: ride_transaction %>
+			<% end %>
+		</div>
+	<% end %>
+</div>

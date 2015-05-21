@@ -11,7 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150514103650) do
+ActiveRecord::Schema.define(version: 20150520102735) do
+
+  create_table "ride_transactions", force: :cascade do |t|
+    t.integer  "ride_id",        limit: 4
+    t.integer  "user_id",        limit: 4
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.string   "from_address",   limit: 255
+    t.float    "from_latitude",  limit: 24
+    t.float    "from_longitude", limit: 24
+    t.string   "to_address",     limit: 255
+    t.float    "to_latitude",    limit: 24
+    t.float    "to_longitude",   limit: 24
+    t.boolean  "isactive",       limit: 1,   default: true
+    t.datetime "timeofride"
+  end
 
   create_table "rides", force: :cascade do |t|
     t.string   "from_address",    limit: 255
@@ -27,6 +42,7 @@ ActiveRecord::Schema.define(version: 20150514103650) do
     t.datetime "updated_at",                                 null: false
     t.integer  "user_id",         limit: 4
     t.boolean  "isactive",        limit: 1,   default: true
+    t.integer  "seats_remaining", limit: 4
   end
 
   add_index "rides", ["user_id"], name: "index_rides_on_user_id", using: :btree

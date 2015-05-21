@@ -22,16 +22,24 @@
 $(function(){ $(document).foundation(); });
 
 $(document).ready(function() {
+	$(".pageload-con").fadeOut(1500);
+
 	$('.datetimepicker').datetimepicker({
-		format:'d-m-Y H:i'
+		format:'d-m-Y H:i',
+		step: 15
 	});
 
 	$('.ride-delete').bind('ajax:beforeSend', function() {
-		//$('#mySpinner').show();
+		$(".otherload-con").show();
 	});
 
 	$('.ride-delete').bind('ajax:complete', function(data) {
-		//$('#mySpinner').hide();
+		$(".otherload-con").fadeOut(1500);
 		$(this).parent(".panel").hide();
+	});
+
+	$(document).on("page:change", function() {
+		$(".pageload-con").show();
+		$(".pageload-con").fadeOut(1500);
 	});
 });

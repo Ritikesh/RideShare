@@ -25,10 +25,13 @@ Rails.application.routes.draw do
   get '/logout' => 'user_sessions#destroy'
   get '/login' => 'user_sessions#new'
 
+  get '/ride_transactions/getRideData/:id' => 'ride_transactions#getRideData'
+
   resource :user_session, only: [:create, :new, :destroy]  
   resource :account, :controller => "users"
   resources :users
   resources :rides
+  resources :ride_transactions
   # Example resource route with options:
   #   resources :products do
   #     member do

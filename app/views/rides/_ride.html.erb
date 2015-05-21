@@ -1,7 +1,11 @@
 <div class="callout panel radius">
 	<% if current_user && ride.user_id == current_user.id %>
-		<%= link_to "<i class='fi-x-circle'></i>".html_safe, ride, class: "ride-delete right", method: :delete, remote: true %>
-		<%= link_to "<i class='fi-pencil'></i>".html_safe, edit_ride_path(ride), class: "right margin-right" %>
+		<% if ride.timeofride > Time.now %>
+			<%= link_to "<i class='fi-x-circle'></i>".html_safe, ride, class: "ride-delete right", method: :delete, remote: true %>
+			<%= link_to "<i class='fi-pencil'></i>".html_safe, edit_ride_path(ride), class: "right margin-right" %>
+		<% else %>
+			<%= link_to "<i class='fi-check'></i>".html_safe, "#", class: "right margin-right" %>
+		<% end %>
 	<% end %>
 	<p class="text-center panel-heading">
 		<i class="fi-clock"></i> 
@@ -21,8 +25,12 @@
 			<div class="columns large-8"><%= ride.car_description %> </div>
 		</div>
 		<div class="row">
-			<div class="columns large-4 "><%= link_to "Seats available", "#"%> </div>
+			<div class="columns large-4 "><%= link_to "Seats Specified", "#"%> </div>
 			<div class="columns large-8"><%= ride.seats_available %></div>
+		</div>
+		<div class="row">
+			<div class="columns large-4 "><%= link_to "Seats taken", "#"%> </div>
+			<div class="columns large-8"><%= (ride.seats_available - ride.seats_remaining) %></div>
 		</div>
 	</div>
 	<span class="right">

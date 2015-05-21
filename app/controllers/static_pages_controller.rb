@@ -2,7 +2,7 @@ class StaticPagesController < ApplicationController
   def home
   	@rides = rides 
     @completed_count = completed_count 
-    @future_count = @rides.count
+    @future_count = @rides.length
     @inactive_count = inactive_count
   end
 

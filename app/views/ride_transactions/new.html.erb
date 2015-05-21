@@ -1,0 +1,333 @@
+<% content_for :title, "Book Ride" %>
+<% content_for :heading, "Book a Ride" %>
+<div class="row">
+	<div id="box-alert" class="alert-box columns large-8 large-centered info" style="visibility:hidden;" data-alert>
+		<span id="alert-text" class="subheader"></span>
+	</div>
+</div>
+<div class="row">
+	<div class="large-6 columns">
+	<%= form_for @ride_transaction do |f| %>
+		<%= render 'layouts/error_messages', object: @ride_transaction %>
+
+		<%= content_tag :div, class: "row" do %>
+			<%= content_tag :div, class: "large-10 columns" do %>
+				<%= f.label :from_address %>
+				<%= f.text_field :from_address, required: true %>
+			<% end %>
+		<% end %>
+
+		<%= content_tag :div, class: "row" do %>
+			<%= content_tag :div, class: "large-10 columns" do %>
+				<%= f.label :to_address %>
+				<%= f.text_field :to_address, required: true %>
+			<% end %>
+		<% end %>
+
+		<%= content_tag :div, class: "row" do %>
+			<%= content_tag :div, class: "large-10 columns" do %>
+				<%= f.label :timeofride %>
+				<%= f.text_field :timeofride, autocomplete: "off", class: "datetimepicker", required: true, readonly: true %>
+			<% end %>
+		<% end %>
+
+		<%= f.hidden_field :from_latitude %>
+		<%= f.hidden_field :from_longitude %>
+		<%= f.hidden_field :to_latitude %>
+		<%= f.hidden_field :to_longitude %>
+		<%= f.hidden_field :ride_id %>
+
+		<%= content_tag :div, class: "row" do %>
+			<%= content_tag :div, class: "large-10 columns" do %>
+				<%= f.button "Search", id:"Search", class: "tiny radius button", disabled: true
+					 %>
+				<button type="button" disabled class="button radius tiny" id="updateMarkers">Update Markers </button>
+				<button type="button" disabled id="getRoute" class="button radius tiny">Get Route</button>
+			<% end %>
+		<% end %>
+
+		<div class="hide" id="norow-container">
+			<div class="callout panel radius">
+				<p class="text-center"><i class="fi-burst large"></i> Snap! <i class="fi-burst large"></i></p>
+				There are no rides based on your locations, YET! <br>Please come back later to book one..
+			</div>
+		</div>
+		<div id="ride-list-container">
+		
+		</div>
+	<% end %>
+	</div>
+	<div class="large-6 columns margin-top">
+		<div id="map"></div>
+	</div>
+</div>
+<script type="text/javascript">
+	var bounds = [];
+	var ridePolylines = [];
+
+	// initialize map
+	var map = new GMaps({
+		div: '#map',
+        lat: 13.0826802,
+        lng: 80.27071840000008
+	});
+
+	//update address on 'drag-end'
+	//change by using 2 constant markers and updating them only on dragend
+	function updateAddress(marker, element)
+	{
+		GMaps.geocode({
+			latLng: marker.getPosition(),
+			callback: function(results, status) {
+
+				var text = (element == "#ride_transaction_from_address") ? "From: " : "To: ";
+				
+				if (status == 'OK') {
+					marker.infoWindow.close();
+					marker.infoWindow = new google.maps.InfoWindow({
+					  	content: text + results[0].formatted_address
+					});
+					marker.infoWindow.open(marker.get('map'), marker);
+					var latlng = results[0].geometry.location;
+					$(element).val(results[0].formatted_address);
+					if(element == "#ride_transaction_to_address")
+					{
+						$("#ride_transaction_to_latitude").val(latlng.lat());
+			      		$("#ride_transaction_to_longitude").val(latlng.lng());
+					}
+					else
+					{
+						$("#ride_transaction_from_latitude").val(latlng.lat());
+			      		$("#ride_transaction_from_longitude").val(latlng.lng());
+					}
+				}
+				if($("#updateMarkers").attr("disabled"))
+					$("#updateMarkers").removeAttr("disabled");
+				if($("#getRoute").attr("disabled"))
+					$("#getRoute").removeAttr("disabled");	
+			}
+		});
+	}
+
+	//to fit markers after they're loaded
+
+	function fitToBounds(bounds){
+		map.fitLatLngBounds(bounds);
+		$("input[type='submit']").removeAttr("disabled");
+	}
+
+	//geolocation
+
+	GMaps.geolocate({
+		success: function(position) {
+			map.setCenter(position.coords.latitude, position.coords.longitude);
+			//bounds.push(new google.maps.LatLng(position.coords.latitude, position.coords.latitude))
+			$("#alert-text").html("Location determined! Add addresses and update markers to view them on map. You can move them around too!");
+		},
+		error: function(error) {
+			$("#alert-text").html('Geolocation failed: '+error.message +". Add addresses and update markers to view them on map. You can move them around too!");
+		},
+		not_supported: function() {
+			$("#alert-text").html("Allow the site to 'Auto-detect' your location or Add addresses and update markers to view them on map. You can move them around too!");
+		},
+		always: function() {
+			$("#alert-text").append("<br>PS: Kindly update markers to avoid outdated data submission.")
+			$("#box-alert").css("visibility","initial");
+		}
+	});
+
+	//before submit, update markers - waste of API calls
+
+	// $("#new_ride_transaction").on('submit',function(){
+		
+	// });
+
+	$("#ride_transaction_from_address, #ride_transaction_to_address").change(function(){
+		if($("#updateMarkers").attr("disabled"))
+			$("#updateMarkers").removeAttr("disabled");
+		if($("#getRoute").attr("disabled"))
+			$("#getRoute").removeAttr("disabled");	
+	});
+
+	$("#ride_transaction_timeofride").change(function(){
+		if($("#ride_transaction_from_address").val() && 
+			$("#ride_transaction_to_address").val() &&
+			$(this).val() )
+			$("#Search").removeAttr("disabled");
+	});
+
+	//update the markers
+
+	$("#updateMarkers").click(function(){
+		if($('#ride_transaction_from_address').val() && $('#ride_transaction_to_address').val())
+		{
+			bounds.length = 0; //clear the array
+			map.removeMarkers(); //clear the map
+			
+			GMaps.geocode({
+			  address: $('#ride_transaction_from_address').val(),
+			  callback: function(results, status) {
+			    
+			    if (status == 'OK') {
+			      var latlng = results[0].geometry.location;
+			      bounds.push(new google.maps.LatLng(latlng.lat(), latlng.lng()));
+			      
+			      $("#ride_transaction_from_latitude").val(latlng.lat());
+			      $("#ride_transaction_from_longitude").val(latlng.lng());
+			      
+			      map.addMarker({
+			        lat: latlng.lat(),
+			        lng: latlng.lng(),
+					infoWindow: {
+						content: "From:" + $("#ride_transaction_from_address").val()
+					},
+		  			draggable: true,
+					dragend: function(e) {
+						updateAddress(this, "#ride_transaction_from_address");
+					}
+			      });
+			    }
+
+			    // fit markers after callback
+		        fitToBounds(bounds);
+			  }
+			});
+
+			GMaps.geocode({
+			  address: $('#ride_transaction_to_address').val(),
+			  callback: function(results, status) {
+			    
+			    if (status == 'OK') {
+			      var latlng = results[0].geometry.location;
+			      bounds.push(new google.maps.LatLng(latlng.lat(), latlng.lng()));
+			      
+			      $("#ride_transaction_to_latitude").val(latlng.lat());
+			      $("#ride_transaction_to_longitude").val(latlng.lng());
+			      
+			      map.addMarker({
+			        lat: latlng.lat(),
+			        lng: latlng.lng(),
+					infoWindow: {
+						content: "To:" + $("#ride_transaction_to_address").val()
+					},
+		  			draggable: true,
+					dragend: function(e) {
+						updateAddress(this, "#ride_transaction_to_address");
+					}
+			      });
+			    }
+
+			    // fit markers after callback
+		        fitToBounds(bounds);
+			  }
+			});
+			$("#Search").removeAttr("disabled");
+			$("#getRoute").removeAttr("disabled");
+		}
+		else
+		{
+			$("#alert-text").html("From and To address are required for markers to be updated on the Map.");
+			$("#box-alert").css("visibility","initial");
+		}
+	});
+	$("#getRoute").click(function(){
+		var path = [];
+
+		if(map.polylines.length)
+        	map.removePolylines();
+		
+		map.getRoutes({
+            origin: [$("#ride_transaction_from_latitude").val(), $("#ride_transaction_from_longitude").val()],
+			destination: [$("#ride_transaction_to_latitude").val(), $("#ride_transaction_to_longitude").val()],
+			callback: function (e) {
+                for (i=0; i<e[0].legs.length; i++) {
+                    for(j=0; j<e[0].legs[i].steps.length; j++) {
+                    	for(k=0; k<e[0].legs[i].steps[j].path.length; k++) {
+                    		path.push(e[0].legs[i].steps[j].path[k]);
+                    	}
+                    }
+                }
+            	map.drawPolyline({
+					path: path,
+					strokeColor: '#131540',
+					strokeOpacity: 0.6,
+					strokeWeight: 6
+				});  
+            }
+        });
+	});
+
+	$("#Search").click(function(event){
+		event.preventDefault();
+		$("#ride-list-container").html("");
+		$("#norow-container").hide();
+		var ridesLength = <%= @rides ? @rides.length : 0 %>;
+		
+		if(ridesLength == 0)
+		{
+			$("#norow-container").show();
+			return false;
+		}
+
+		if(ridesLength != polyLines.length)
+		{
+			while(ridesLength == polyLines.length)
+			{
+				//doNothing();
+				console.log("still here");
+			}
+		}
+  		
+  		var a = new google.maps.LatLng($("#ride_transaction_from_latitude").val(), $("#ride_transaction_from_longitude").val());
+  		var b = new google.maps.LatLng($("#ride_transaction_to_latitude").val(), $("#ride_transaction_to_longitude").val());
+		var flag = true;
+
+		$.each(polyLines, function(index, value){
+			 var poly = value.polyline;
+			if( google.maps.geometry.poly.isLocationOnEdge(a, poly, 0.020) &&
+				google.maps.geometry.poly.isLocationOnEdge(b, poly, 0.020) )
+			{
+				flag = false;
+	  			$.get("/ride_transactions/getRideData/"+value.rideIndex ,function(data){
+	  				$("#ride-list-container").append(data);
+	  			});
+	  		}
+  		});
+  		if(flag){
+	  		if($("#ride-list-container").html() == "")
+	  			$("#norow-container").show();
+  		}
+	});
+	
+	$("#ride-list-container").on('click', "a.bookRide", function(event){
+		event.preventDefault();
+		$("#ride_transaction_ride_id").val($(this).data("rideid"));
+		$("#new_ride_transaction").submit();
+	});
+
+	// push as AJAX?
+	var polyLines = [];
+	<% if @rides %>
+		<% @rides.each do |ride| %>
+			map.getRoutes({
+	            origin: [<%= ride.from_latitude %>, <%= ride.from_longitude %>],
+				destination: [<%= ride.to_latitude %>, <%= ride.to_longitude %>],
+				callback: function (e) {
+					var path = [];
+	                for (i=0; i<e[0].legs.length; i++) {
+	                    for(j=0; j<e[0].legs[i].steps.length; j++) {
+	                    	for(k=0; k<e[0].legs[i].steps[j].path.length; k++) {
+	                    		path.push(e[0].legs[i].steps[j].path[k]);
+	                    	}
+	                    }
+	                }
+	                polyLines.push({ rideIndex: <%= ride.id %>, polyline:
+	                	new google.maps.Polyline({
+					    	path: path
+				    	})
+	            	}); 
+	            }
+	        });
+		<% end %>	
+	<% end %>
+</script>

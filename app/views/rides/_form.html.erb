@@ -79,9 +79,8 @@
 		GMaps.geocode({
 			latLng: marker.getPosition(),
 			callback: function(results, status) {
-				var text = "From: ";
-				if(element == "#ride_to_address")
-					text = "To: ";
+
+				var text = (element == "#ride_from_address") ? "From: " : "To: ";
 				
 				if (status == 'OK') {
 					marker.infoWindow.close();
@@ -262,8 +261,10 @@
 	});
 	$("#getRoute").click(function(){
 		var path = [];
-		if(map.markers.length < 2)
-			$("#updateMarkers").click();
+		
+		if(map.polylines.length)
+        	map.removePolylines();
+
         map.getRoutes({
             origin: [$("#ride_from_latitude").val(), $("#ride_from_longitude").val()],
 			destination: [$("#ride_to_latitude").val(), $("#ride_to_longitude").val()],
@@ -281,7 +282,6 @@
 					strokeOpacity: 0.6,
 					strokeWeight: 6
 				});  
-				console.log(path.toString());
             }
         });
 	});
