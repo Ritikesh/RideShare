@@ -16,15 +16,16 @@ class RideTransactionsController < ApplicationController
 	end
 
 	def create
+		render text: params[:ride_transaction][:ride_id]
 		@ride = Ride.find(params[:ride_id])
-		if @ride && @ride.save
-			@ride_transaction = current_user.ride_transactions.build(ride_transaction_params)
-		    if @ride_transaction.save
-		      flash[:info] = "Ride share registered!"
-		      redirect_to root_path
-		    else
-		      render 'new'
-		    end
+		@ride_transaction = current_user.ride_transactions.build(ride_transaction_params)
+		if @ride_transaction.save
+			if @ride && @ride.save
+				flash[:info] = "Ride share registered!"
+				redirect_to root_path
+			else
+				render 'new'
+			end
 		else
 			render 'new'
 		end
