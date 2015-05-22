@@ -27,6 +27,8 @@ Rails.application.routes.draw do
 
   get '/ride_transactions/getRideData/:id' => 'ride_transactions#getRideData'
 
+  get '/ride_transactions/search' => 'ride_transactions#search'
+
   resource :user_session, only: [:create, :new, :destroy]  
   resource :account, :controller => "users"
   resources :users

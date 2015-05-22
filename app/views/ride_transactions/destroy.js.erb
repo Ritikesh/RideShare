@@ -1,0 +1,8 @@
+<% if (@completed_count + @future_count) == 0 %>
+	$("body").html("<script>window.location = '<%= ride_transactions_path %>'</script>")
+<% else %>
+	$("#totalCount").html('<%= (@inactive_count + @completed_count + @future_count) %>');
+	$("#completedCount").html('<%= @completed_count %>');
+	$("#inactiveCount").html('<%= @inactive_count %>');
+	$("#futureCount").html('<%= @future_count %>');
+<% end %>

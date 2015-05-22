@@ -34,8 +34,15 @@ $(document).ready(function() {
 	});
 
 	$('.ride-delete').bind('ajax:complete', function(data) {
-		$(".otherload-con").fadeOut(1500);
-		$(this).parent(".panel").hide();
+		if($(".disabled-ride").length)
+			$(this).parent(".panel").remove().insertBefore(".disabled-ride:first");
+		else
+			$(this).parent(".panel").remove().insertAfter(".panel:last");
+		$(this).parent(".panel").addClass("disabled-ride");
+		$(this).siblings("a.edit").remove();
+		$("<i class='fi-trash right margin-right'></i>").insertAfter(this);
+		$(".otherload-con").fadeOut(1000);
+		$(this).remove();
 	});
 
 	$(document).on("page:change", function() {

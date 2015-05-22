@@ -1,7 +1,7 @@
 <% content_for :title, "My Rides" %>
 <% content_for :heading, "My Rides" %>
-<div class="row">
-	<% if @rides.empty? %>
+<div class="row margin-top">
+	<% if @rides.length == 0 && @inactive_rides.length == 0 %>
 		<div class="columns large-6 large-centered">
 			<div class="callout panel radius">
 				<p class="text-center"><i class="fi-burst large"></i> Snap! <i class="fi-burst large"></i></p>
@@ -13,9 +13,18 @@
 		<div class="columns large-4">
 			<%= render 'stats' %>
 		</div>
+		
 		<div class="columns large-7 page large-offset-1">
-			<% @rides.each do | ride | %>
-				<%= render 'ride', ride: ride %>
+			<% if @rides.length %>
+				<% @rides.each do | ride | %>
+					<%= render 'ride', ride: ride %>
+				<% end %>
+			<% end %>
+
+			<% if @inactive_rides.length %>
+				<% @inactive_rides.each do | inactive_ride | %>
+					<%= render 'ride', ride: inactive_ride %>
+				<% end %>
 			<% end %>
 		</div>
 	<% end %>

@@ -1,54 +1,8 @@
-<% content_for :title, "Contact me" %>
-<% content_for :heading, "Contact me" %>
-<div id="map" style="height: 500px; width: 600px;"></div>
-<script>
-	var map = new GMaps({
-		div: '#map',
-		lat: 12.9914,
-		lng: 80.2742
-	});
-	var latlng1 = new google.maps.LatLng(13.02, 80.228);
-	var latlng2 = new google.maps.LatLng(13.0836, 80.2742);
+<% content_for :title, "Contact" %>
+<% content_for :heading, "Contact" %>
 
-	map.addMarker({
-	    lat: latlng1.lat(),
-	    lng: latlng1.lng(),
-		title: 'Lima'
-	});
-	// map.drawRoute({
-	// 	origin: [12.9914, 80.2165],
-	// 	destination: [13.0836, 80.2742],
-	// 	travelMode: 'driving',
-	// 	strokeColor: '#131540',
-	// 	strokeOpacity: 0.6,
-	// 	strokeWeight: 6
-	// });
-	
-	path = [];
-	var line;
-	map.getRoutes({
-	    origin: [12.9914, 80.2165],
-		destination: [13.0836, 80.2742],
-		callback: function (e) {
-	        for (i=0; i<e[0].legs.length; i++) {
-	            for(j=0; j<e[0].legs[i].steps.length; j++) {
-	            	for(k=0; k<e[0].legs[i].steps[j].path.length; k++) {
-	            		path.push(e[0].legs[i].steps[j].path[k]);
-	            	}
-	            }
-	        }
-	        // line = new google.maps.Polyline({
-	        // 	path: [
-	        // 		new google.maps.LatLng(12.9914, 80.2165),
-	        // 		new google.maps.LatLng(13.0836, 80.2742)
-	        // 	]
-	        // });
-
-	        console.log(path);
-			line = map.drawPolyline({
-				path: path
-			});  
-			console.log(google.maps.geometry.poly.isLocationOnEdge(latlng1, line, 0.020));
-	    }
-	});
-</script>
+<div class="row">
+	<div class="columns large-centered large-6">
+		<p class="callout panel radius"> This space will be updated with contact information </p>
+	</div>
+</div>

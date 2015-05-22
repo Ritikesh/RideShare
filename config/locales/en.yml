@@ -20,4 +20,10 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    errors:
+      models:
+        ride:
+          attributes:
+            seats_remaining:
+              greater_than_or_equal_to: "Seats available cannot be lower than the number of seats booked for this ride."

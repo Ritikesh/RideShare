@@ -1,0 +1,47 @@
+<% content_for :title, "Ride" %>
+<% content_for :heading, "Ride Information:" %>
+<div class="row margin-top">
+	<% if @ride_transactions.length == 0 %>
+		<div class="columns large-6 large-centered">
+			<div class="callout panel radius">
+				<p class="text-center"><i class="fi-burst large"></i> Snap! <i class="fi-burst large"></i></p>
+					Nobody has shared your ride yet. Kindly check back after sometime on any updates. <br>
+					In the meanwhile, you can share this link and have your friends register for the ride to share it with them.
+			</div>
+		</div>
+	<% else %>
+		<div class="columns large-6">
+			<div class="callout panel radius">
+				<p class="text-center panel-heading"> RideShare Statistics - Ride </p>
+				<div class="row">
+					<div class="row">
+						<div class="columns large-4"><%= link_to "# of Shares", ""%> </div>
+						<div id="futureCount" class="columns large-8"><%= @ride_transactions.length %></div>
+					</div>
+				</div>
+				<%= render 'layouts/ride_information', ride: @ride %>
+			</div>
+		</div>
+		
+		<div class="columns large-6 page">
+			<% @ride_transactions.each do | ride_transaction | %>
+				<div class="panel callout radius">
+					<p class="text-center panel-heading">
+						<i class="fi-clock"></i> 
+						<%= ride_transaction.timeofride.to_time.strftime("%A, %d-%m-%Y %H:%M, %Z") %>
+					</p>
+					<div class="row">
+						<div class="row">
+							<div class="columns large-4"><%= link_to "Pick up from:", "#"%></div>
+							<div class="columns large-8"><%= ride_transaction.from_address %></div>
+						</div>
+						<div class="row">
+							<div class="columns large-4 "><%= link_to "Drop to:", "#"%> </div>
+							<div class="columns large-8"><%= ride_transaction.to_address %> </div>
+						</div>
+					</div>
+				</div>
+			<% end %>
+		</div>
+	<% end %>
+</div>

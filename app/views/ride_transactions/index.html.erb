@@ -1,7 +1,7 @@
 <% content_for :title, "Booked Rides" %>
 <% content_for :heading, "My Booked Rides" %>
 <div class="row margin-top">
-	<% if @ride_transactions.empty? %>
+	<% if @ride_transactions.length == 0 && @inactive_ride_transactions.length == 0 %>
 		<div class="columns large-6 large-centered">
 			<div class="callout panel radius">
 				<p class="text-center"><i class="fi-burst large"></i> Snap! <i class="fi-burst large"></i></p>
@@ -13,9 +13,18 @@
 		<div class="columns large-4">
 			<%= render 'stats' %>
 		</div>
+
 		<div class="columns large-6 page large-offset-2">
-			<% @ride_transactions.each do | ride_transaction | %>
-				<%= render 'ride_transaction', ride_transaction: ride_transaction %>
+			<% if @ride_transactions.length %>
+					<% @ride_transactions.each do | ride_transaction | %>
+						<%= render 'ride_transaction', ride_transaction: ride_transaction %>
+					<% end %>
+			<% end %>
+
+			<% if @inactive_ride_transactions.length %>
+					<% @inactive_ride_transactions.each do | inactive_ride_transaction | %>
+						<%= render 'ride_transaction', ride_transaction: inactive_ride_transaction %>
+					<% end %>
 			<% end %>
 		</div>
 	<% end %>

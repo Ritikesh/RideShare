@@ -1,39 +1,20 @@
-<div class="callout panel radius">
-	<% if current_user && ride.user_id == current_user.id %>
-		<% if ride.timeofride > Time.now %>
-			<%= link_to "<i class='fi-x-circle'></i>".html_safe, ride, class: "ride-delete right", method: :delete, remote: true %>
-			<%= link_to "<i class='fi-pencil'></i>".html_safe, edit_ride_path(ride), class: "right margin-right" %>
-		<% else %>
-			<%= link_to "<i class='fi-check'></i>".html_safe, "#", class: "right margin-right" %>
+<div class="callout panel radius <%= "disabled-ride" unless ride.isactive %>">
+	<% if ride.isactive %>
+		<% if current_user && ride.user_id == current_user.id %>
+			<% if ride.timeofride > Time.now %>
+				<%= link_to "<i class='fi-x-circle'></i>".html_safe, ride, class: "ride-delete right", method: :delete, remote: true %>
+				<%= link_to "<i class='fi-pencil'></i>".html_safe, edit_ride_path(ride), class: "right edit margin-right" %>
+			<% else %>
+				<%= link_to "<i class='fi-check'></i>".html_safe, "#", class: "right margin-right" %>
+			<% end %>
 		<% end %>
+	<% else %>
+		<i class='fi-trash right margin-right'></i>
 	<% end %>
 	<p class="text-center panel-heading">
 		<i class="fi-clock"></i> 
 		<%= ride.timeofride.to_time.strftime("%A, %d-%m-%Y %H:%M, %Z") %>
 	</p>
-	<div class="row">
-		<div class="row">
-			<div class="columns large-4"><%= link_to "From", "#"%></div>
-			<div class="columns large-8"><%= ride.from_address %></div>
-		</div>
-		<div class="row">
-			<div class="columns large-4 "><%= link_to "To", "#"%> </div>
-			<div class="columns large-8"><%= ride.to_address %> </div>
-		</div>
-		<div class="row">
-			<div class="columns large-4 "><%= link_to "Car Description", "#"%> </div>
-			<div class="columns large-8"><%= ride.car_description %> </div>
-		</div>
-		<div class="row">
-			<div class="columns large-4 "><%= link_to "Seats Specified", "#"%> </div>
-			<div class="columns large-8"><%= ride.seats_available %></div>
-		</div>
-		<div class="row">
-			<div class="columns large-4 "><%= link_to "Seats taken", "#"%> </div>
-			<div class="columns large-8"><%= (ride.seats_available - ride.seats_remaining) %></div>
-		</div>
-	</div>
-	<span class="right">
-		Posted by: <%= link_to ride.user.name, ride.user, class: "success" %>
-	</span>
+	<%= render 'layouts/ride_information', ride: ride %>
+	<%= render 'layouts/ride_footer', ride: ride %>
 </div>

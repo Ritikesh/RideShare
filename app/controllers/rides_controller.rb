@@ -17,10 +17,23 @@ class RidesController < ApplicationController
     end
   end
 
+  def show
+    @ride = Ride.find_by_id(params[:id])
+    if @ride
+      @ride_transactions = @ride.ride_transactions.where("isactive = :v", {v: true})
+      render 'show'
+    else
+      render file: 'public/404.html', status: 404
+    end
+  end
+
   def edit
     @ride = Ride.find_by_id(params[:id])
-    unless @ride.isactive
+    if not @ride.isactive 
       flash[:info] = "This ride has been canceled by you!"
+      redirect_to root_path
+    elsif @ride.timeofride < Time.now
+      flash[:info] = "This ride has already been completed!"
       redirect_to root_path
     end
   end
@@ -37,19 +50,26 @@ class RidesController < ApplicationController
 
   def index
     @rides = rides current_user.id
-    @completed_count = completed_count current_user.id
-    @future_count = future_count current_user.id
-    @inactive_count = inactive_count current_user.id
+    @inactive_rides = inactive_rides current_user.id
+    if @rides.length || @inactive_rides.length
+      @completed_count = completed_count current_user.id
+      @future_count = future_count current_user.id
+      @inactive_count = inactive_count current_user.id
+    end
   end
 
   def destroy
     @ride = Ride.find(params[:id])
-    if @ride.update_attribute("isactive", false)
+    if @ride.timeofride < Time.now
+      flash[:info] = "This ride has already been completed!"
+      redirect_to rides_path
+    elsif @ride.update_attribute("isactive", false)
+      @ride.ride_transactions.update_all(isactive: false)
       @future_count = future_count current_user.id
       @inactive_count = inactive_count current_user.id
       @completed_count = completed_count current_user.id
       respond_to do |format|
-        format.html { redirect_to rides_path }
+        format.html { redirect_to rides_path, info: "Ride canceled successfully." }
         format.js 
       end
     else

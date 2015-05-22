@@ -1,55 +1,8 @@
-<ul id="instructions"></ul>
-<div id="map" style="height: 500px; width: 600px;"></div>
-<script>
-	var map = new GMaps({
-		div: '#map',
-		lat: -12.043333,
-		lng: -77.028333
-	});
+<% content_for :title, "Help" %>
+<% content_for :heading, "Help" %>
 
-	path = [];
-
-	map.travelRoute({
-	  origin: [-12.044012922866312, -77.02470665341184],
-	  destination: [-12.090814532191756, -77.02271108990476],
-	  travelMode: 'driving',
-	  step: function(e) {
-	  	// console.log(e.path.length);
-	  	// console.log(e.polyline);
-	  	//path.push(e.lat_lngs);
-	    $('#instructions').append('<li>'+e.instructions+' : ' + e.start_location.lat() + '</li>');
-	    $('#instructions li:eq(' + e.step_number + ')').delay(450 * e.step_number).fadeIn(200, function() {
-			path.push(e.path);
-			// console.log("here");
-	      // map.drawPolyline({
-	      //   path: e.path,
-	      //   strokeColor: '#131540',
-	      //   strokeOpacity: 0.6,
-	      //   strokeWeight: 6
-	      // });  
-	    });
-	  }
-	});
-
-	map.getRoutes({
-          origin: [map.markers[0].getPosition().lat(), map.markers[0].getPosition().lng()],
-          destination: [map.markers[map.markers.length-1].getPosition().lat(), map.markers[map.markers.length-1].getPosition().lng()],
-          callback: function(e){
-            route = new GMaps.Route({
-              map: map,
-              route: e[0],
-              strokeColor: '#336699',
-              strokeOpacity: 0.5,
-              strokeWeight: 10
-            });
-            $('#forward').removeAttr('disabled');
-            $('#back').removeAttr('disabled');
-          }
-
-	map.drawPolyline({
-		path: path,
-		strokeColor: '#131540',
-  		strokeOpacity: 0.6,
-		strokeWeight: 6
-	});
-</script>
+<div class="row">
+	<div class="columns large-centered large-6">
+		<p class="callout panel radius"> This space will be updated with Help-related information </p>
+	</div>
+</div>

@@ -4,26 +4,35 @@ class RideTransactionsController < ApplicationController
 	before_filter :correct_user, only: [:edit, :destroy, :update]
 
 	def index
-		@ride_transactions  = current_user.ride_transactions
-	    @completed_count = completed_transaction_count current_user.id
-	    @future_count = future_transaction_count current_user.id
-	    @inactive_count = inactive_transaction_count current_user.id
+		@ride_transactions  = ride_transactions current_user.id
+		@inactive_ride_transactions = inactive_ride_transactions current_user.id
+
+		if @ride_transactions.length || @inactive_ride_transactions.length
+		    @completed_count = completed_transaction_count current_user.id
+		    @future_count = future_transaction_count current_user.id
+		    @inactive_count = inactive_transaction_count current_user.id
+		end
 	end
 
 	def new
 		@ride_transaction = RideTransaction.new
-		@rides = rides_for_transaction current_user.id
 	end
 
 	def create
-		render text: params[:ride_transaction][:ride_id]
-		@ride = Ride.find(params[:ride_id])
-		@ride_transaction = current_user.ride_transactions.build(ride_transaction_params)
-		if @ride_transaction.save
-			if @ride && @ride.save
-				flash[:info] = "Ride share registered!"
-				redirect_to root_path
-			else
+		@ride = Ride.find_by_id(params[:ride_transaction][:ride_id])
+		if @ride
+			@ride_transaction = current_user.ride_transactions.build(ride_transaction_params)
+			# transactions
+			begin
+				# transactions?
+				if @ride_transaction.save && @ride.save
+					flash[:info] = "Ride share registered!"
+					redirect_to root_path
+				else
+					render 'new'
+				end
+			rescue ActiveRecord::RecordNotUnique
+				@ride_transaction.errors[:base] << "You can register only once/Ride."
 				render 'new'
 			end
 		else
@@ -35,10 +44,37 @@ class RideTransactionsController < ApplicationController
 		@ride = Ride.find(params[:id])
 	    if @ride
 	        if request.xhr?
-	    		render partial: 'ride'
+	    		render partial: 'ride' #RideTransaction/_Ride
 			else
 				render file: 'public/404.html', status: 403
 			end
+		end
+	end
+
+	def search
+		if params[:timeofride].to_time
+			@rides = rides_search params[:timeofride]
+			render json: { rides: @rides}
+		else
+			render json: { rides: {}}
+		end
+	end
+
+	def destroy
+		@ride_transaction = RideTransaction.find(params[:id])
+		if @ride_transaction.timeofride < Time.now
+			flash[:info] = "This ride has already been completed!"
+			redirect_to ride_transactions_path
+		elsif @ride_transaction.update_attribute("isactive", false) && @ride_transaction.ride.save
+			@completed_count = completed_transaction_count current_user.id
+		    @future_count = future_transaction_count current_user.id
+		    @inactive_count = inactive_transaction_count current_user.id
+			respond_to do |format|
+				format.html { redirect_to ride_transactions_path, info: "Ride canceled successfully." }
+				format.js 
+			end
+		else
+			#render text: "hello world"
 		end
 	end
 

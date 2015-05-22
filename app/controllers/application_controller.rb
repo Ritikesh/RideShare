@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 	helper_method :current_user_session, :current_user, :require_user, :require_no_user,
 		:redirect_back_or_default, :store_location, :inactive_count, :completed_count, 
 		:future_count, :future_transaction_count, :completed_transaction_count, 
-		:rides, :rides_for_transaction
+		:rides #, :rides_for_transaction
 
 	private
 	    def current_user_session
@@ -103,26 +103,47 @@ class ApplicationController < ActionController::Base
 	      	end
 	    end
 
+	    def rides_search(timeofride)
+	    	before = timeofride.to_time - 60*60
+	    	after = timeofride.to_time + 60*60
+	    	rides = Ride.where("isactive = :t and timeofride between :u and :v and 
+	    		seats_remaining > :w", {t: true, u:before, v: after, w: 0})
+	    end
+
 	    def rides(userid = nil)
 	    	if userid
-	    		rides = Ride.eager_load(:user).where(["isactive = :t and user_id = :u", 
+	    		rides = Ride.includes(:user).where(["isactive = :t and user_id = :u", 
           	  		{t: true, u: userid}]).order(timeofride: :desc)
 	    	else
-    			rides = Ride.eager_load(:user).where("isactive = :t and timeofride > :u and seats_remaining > :v",
+    			rides = Ride.includes(:user).where("isactive = :t and timeofride > :u and seats_remaining > :v",
 					{t: true, u:Time.now, v: 0}).order(:timeofride)
-	    		# rides = Ride.where(["isactive = :t and timeofride > :v", 
-	    		# 	{t: true, v: Time.now}])
 	    	end
 	    end
 
-	    def rides_for_transaction(userid = nil)
+	    def inactive_rides(userid = nil)
 	    	if userid
-	    		rides = Ride.eager_load(:user).where(["isactive = :t and user_id <> :u and 
-	    			timeofride > :v and seats_remaining > :w", 
-          	  		{t: true, u: userid, v:Time.now, w: 0}]).order(timeofride: :desc)
+	    		rides = Ride.includes(:user).where(["isactive = :t and user_id = :u", 
+          	  		{t: false, u: userid}]).order(timeofride: :desc)
 	    	else
-    			rides = Ride.eager_load(:user).where("isactive = :t and timeofride > :u and seats_remaining > :v",
-					{t: true, u:Time.now, v: 0}).order(:timeofride)
+	    		nil
+	    	end
+	    end
+
+	    def ride_transactions(userid = nil)
+	    	if userid
+	    		ride_transactions = RideTransaction.includes(:user, :ride).where(["isactive = :t and user_id = :u", 
+          	  		{t: true, u: userid}]).order(timeofride: :desc)
+	    	else
+	    		nil
+	    	end
+	    end
+
+	    def inactive_ride_transactions(userid = nil)
+	    	if userid
+	    		ride_transactions = RideTransaction.includes(:user, :ride).where(["isactive = :t and user_id = :u", 
+          	  		{t: false, u: userid}]).order(timeofride: :desc)
+	    	else
+	    		nil
 	    	end
 	    end
 end 

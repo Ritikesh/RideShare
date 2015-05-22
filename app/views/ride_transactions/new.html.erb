@@ -1,8 +1,10 @@
 <% content_for :title, "Book Ride" %>
 <% content_for :heading, "Book a Ride" %>
 <div class="row">
-	<div id="box-alert" class="alert-box columns large-8 large-centered info" style="visibility:hidden;" data-alert>
-		<span id="alert-text" class="subheader"></span>
+	<div id="box-alert" class="alert-box columns large-8 large-centered info" data-alert>
+		<span id="alert-text" class="subheader">
+			Add addresses and update markers to view them on the map. You can move them around too!<br><strong>Note:</strong> Always update markers to avoid 'incorrect' data submission.
+		</span>
 	</div>
 </div>
 <div class="row">
@@ -39,10 +41,9 @@
 
 		<%= content_tag :div, class: "row" do %>
 			<%= content_tag :div, class: "large-10 columns" do %>
-				<%= f.button "Search", id:"Search", class: "tiny radius button", disabled: true
-					 %>
 				<button type="button" disabled class="button radius tiny" id="updateMarkers">Update Markers </button>
 				<button type="button" disabled id="getRoute" class="button radius tiny">Get Route</button>
+				<%= f.button "Search", type: "button", id:"Search", class: "button tiny radius", disabled: false %>
 			<% end %>
 		<% end %>
 
@@ -63,7 +64,6 @@
 </div>
 <script type="text/javascript">
 	var bounds = [];
-	var ridePolylines = [];
 
 	// initialize map
 	var map = new GMaps({
@@ -72,8 +72,30 @@
         lng: 80.27071840000008
 	});
 
-	//update address on 'drag-end'
-	//change by using 2 constant markers and updating them only on dragend
+	// geolocation
+	setTimeout(function(){
+		GMaps.geolocate({
+			success: function(position) {
+				map.setCenter(position.coords.latitude, position.coords.longitude);
+			},
+			error: function(error) {
+			},
+			not_supported: function() {
+			},
+			always: function() {
+			}
+		});
+	}, 500);
+
+	// on erroneous submission, enable update markers automatically
+	if($("#ride_transaction_from_address").val() && $("#ride_transaction_to_address").val())
+	{
+		$("#Search").attr("disabled",true);
+		$("#updateMarkers").removeAttr("disabled");
+		$("#getRoute").removeAttr("disabled");
+	}
+
+	// update address on marker 'drag-end'
 	function updateAddress(marker, element)
 	{
 		GMaps.geocode({
@@ -83,11 +105,13 @@
 				var text = (element == "#ride_transaction_from_address") ? "From: " : "To: ";
 				
 				if (status == 'OK') {
+					// infowindow content is not directly editable - create new for every drag based location update
 					marker.infoWindow.close();
 					marker.infoWindow = new google.maps.InfoWindow({
 					  	content: text + results[0].formatted_address
 					});
 					marker.infoWindow.open(marker.get('map'), marker);
+
 					var latlng = results[0].geometry.location;
 					$(element).val(results[0].formatted_address);
 					if(element == "#ride_transaction_to_address")
@@ -101,52 +125,55 @@
 			      		$("#ride_transaction_from_longitude").val(latlng.lng());
 					}
 				}
-				if($("#updateMarkers").attr("disabled"))
-					$("#updateMarkers").removeAttr("disabled");
-				if($("#getRoute").attr("disabled"))
-					$("#getRoute").removeAttr("disabled");	
 			}
 		});
 	}
 
-	//to fit markers after they're loaded
+	// to fit markers after they're loaded
 
 	function fitToBounds(bounds){
 		map.fitLatLngBounds(bounds);
-		$("input[type='submit']").removeAttr("disabled");
+		if($("#ride_transaction_from_address").val() && $("#ride_transaction_to_address").val() &&
+			$("#ride_transaction_timeofride").val() )
+			$("#Search").removeAttr("disabled");
 	}
 
-	//geolocation
+	// To update rides on page after all polylines have been initialized from Gmaps
+	function updateRidesOnPage(polyLines)
+	{
+		var a = new google.maps.LatLng($("#ride_transaction_from_latitude").val(), $("#ride_transaction_from_longitude").val());
+  		var b = new google.maps.LatLng($("#ride_transaction_to_latitude").val(), $("#ride_transaction_to_longitude").val());
+		
+		var flag = true;
 
-	GMaps.geolocate({
-		success: function(position) {
-			map.setCenter(position.coords.latitude, position.coords.longitude);
-			//bounds.push(new google.maps.LatLng(position.coords.latitude, position.coords.latitude))
-			$("#alert-text").html("Location determined! Add addresses and update markers to view them on map. You can move them around too!");
-		},
-		error: function(error) {
-			$("#alert-text").html('Geolocation failed: '+error.message +". Add addresses and update markers to view them on map. You can move them around too!");
-		},
-		not_supported: function() {
-			$("#alert-text").html("Allow the site to 'Auto-detect' your location or Add addresses and update markers to view them on map. You can move them around too!");
-		},
-		always: function() {
-			$("#alert-text").append("<br>PS: Kindly update markers to avoid outdated data submission.")
-			$("#box-alert").css("visibility","initial");
-		}
-	});
+		$.each(polyLines, function(index, value){
+			 var poly = value.polyline;
+			if( google.maps.geometry.poly.isLocationOnEdge(a, poly, 0.020) &&
+				google.maps.geometry.poly.isLocationOnEdge(b, poly, 0.020) )
+			{
+				flag = false;
+	  			$.get("/ride_transactions/getRideData/"+value.rideIndex ,function(data){
+	  				$("#ride-list-container").append(data);
+	  			});
+	  		}
+  		});
+  		if(flag){
+	  		if($("#ride-list-container").html() == "")
+	  			$("#norow-container").show();
+  		}
+		$(".otherload-con").fadeOut(1000);
+	}
 
-	//before submit, update markers - waste of API calls
+	// before submit, update markers - waste of API calls
 
 	// $("#new_ride_transaction").on('submit',function(){
 		
 	// });
 
 	$("#ride_transaction_from_address, #ride_transaction_to_address").change(function(){
-		if($("#updateMarkers").attr("disabled"))
-			$("#updateMarkers").removeAttr("disabled");
-		if($("#getRoute").attr("disabled"))
-			$("#getRoute").removeAttr("disabled");	
+		$("#Search").attr("disabled",true);
+		$("#updateMarkers").removeAttr("disabled");
+		$("#getRoute").removeAttr("disabled");	
 	});
 
 	$("#ride_transaction_timeofride").change(function(){
@@ -156,8 +183,11 @@
 			$("#Search").removeAttr("disabled");
 	});
 
-	//update the markers
+	/* 
+	 * Event Binders
+	 */
 
+	// update the markers
 	$("#updateMarkers").click(function(){
 		if($('#ride_transaction_from_address').val() && $('#ride_transaction_to_address').val())
 		{
@@ -188,8 +218,8 @@
 			      });
 			    }
 
-			    // fit markers after callback
-		        fitToBounds(bounds);
+			    if (map.markers.length == 2)
+		        	fitToBounds(bounds); // fit markers after both markers are in place
 			  }
 			});
 
@@ -217,12 +247,10 @@
 			      });
 			    }
 
-			    // fit markers after callback
-		        fitToBounds(bounds);
+			    if (map.markers.length == 2)
+		        	fitToBounds(bounds); // fit markers after both markers are in place
 			  }
 			});
-			$("#Search").removeAttr("disabled");
-			$("#getRoute").removeAttr("disabled");
 		}
 		else
 		{
@@ -230,6 +258,7 @@
 			$("#box-alert").css("visibility","initial");
 		}
 	});
+
 	$("#getRoute").click(function(){
 		var path = [];
 
@@ -252,51 +281,68 @@
 					strokeColor: '#131540',
 					strokeOpacity: 0.6,
 					strokeWeight: 6
-				});  
+				});
             }
         });
 	});
 
 	$("#Search").click(function(event){
-		event.preventDefault();
-		$("#ride-list-container").html("");
-		$("#norow-container").hide();
-		var ridesLength = <%= @rides ? @rides.length : 0 %>;
+
+		event.preventDefault();	//prevent form submission
 		
-		if(ridesLength == 0)
+		var timeofride = $("#ride_transaction_timeofride").val();
+		var dateformatted = ([timeofride.split("-")[1], timeofride.split("-")[0], timeofride.split("-")[2]]).join("-");	//Date.parse accepts mm-dd-yyyy h:m
+		if(Date.parse(dateformatted))
 		{
-			$("#norow-container").show();
-			return false;
-		}
+			$(".otherload-con").show();
+			$("#ride-list-container").html("");
+			$("#norow-container").hide();
+			$("#box-alert").css("visibility","hidden");
+	    
+		    $.get("/ride_transactions/search?timeofride="+encodeURIComponent(timeofride)).success(function(data){
+		        console.log("success - "+ data.rides.length);
+				
+				if(!data.rides.length)
+				{
+					$("#norow-container").show();
+					$(".otherload-con").fadeOut(1500);
+					return false;
+				}
 
-		if(ridesLength != polyLines.length)
+				var polyLines = [];
+		        $.each(data.rides, function(index, value){
+					map.getRoutes({
+			            origin: [ value.from_latitude, value.from_longitude ],
+						destination: [ value.to_latitude, value.to_longitude ],
+						callback: function (e) {
+							var path = [];
+			                for (i=0; i<e[0].legs.length; i++) {
+			                    for(j=0; j<e[0].legs[i].steps.length; j++) {
+			                    	for(k=0; k<e[0].legs[i].steps[j].path.length; k++) {
+			                    		path.push(e[0].legs[i].steps[j].path[k]);
+			                    	}
+			                    }
+			                }
+			                polyLines.push({ rideIndex: value.id , polyline:
+			                	new google.maps.Polyline({
+							    	path: path
+						    	})
+			            	}); 
+			            	if(data.rides.length == polyLines.length)
+			            	{
+			            		//on last callback, call to check if there's a ride available
+			            		updateRidesOnPage(polyLines);
+			            	}	
+			            }
+			        });
+				});
+		    });
+		}
+		else
 		{
-			while(ridesLength == polyLines.length)
-			{
-				//doNothing();
-				console.log("still here");
-			}
+			$("#alert-text").html("Invalid Date");
+			$("#box-alert").css("visibility","inherit");
 		}
-  		
-  		var a = new google.maps.LatLng($("#ride_transaction_from_latitude").val(), $("#ride_transaction_from_longitude").val());
-  		var b = new google.maps.LatLng($("#ride_transaction_to_latitude").val(), $("#ride_transaction_to_longitude").val());
-		var flag = true;
-
-		$.each(polyLines, function(index, value){
-			 var poly = value.polyline;
-			if( google.maps.geometry.poly.isLocationOnEdge(a, poly, 0.020) &&
-				google.maps.geometry.poly.isLocationOnEdge(b, poly, 0.020) )
-			{
-				flag = false;
-	  			$.get("/ride_transactions/getRideData/"+value.rideIndex ,function(data){
-	  				$("#ride-list-container").append(data);
-	  			});
-	  		}
-  		});
-  		if(flag){
-	  		if($("#ride-list-container").html() == "")
-	  			$("#norow-container").show();
-  		}
 	});
 	
 	$("#ride-list-container").on('click', "a.bookRide", function(event){
@@ -305,29 +351,4 @@
 		$("#new_ride_transaction").submit();
 	});
 
-	// push as AJAX?
-	var polyLines = [];
-	<% if @rides %>
-		<% @rides.each do |ride| %>
-			map.getRoutes({
-	            origin: [<%= ride.from_latitude %>, <%= ride.from_longitude %>],
-				destination: [<%= ride.to_latitude %>, <%= ride.to_longitude %>],
-				callback: function (e) {
-					var path = [];
-	                for (i=0; i<e[0].legs.length; i++) {
-	                    for(j=0; j<e[0].legs[i].steps.length; j++) {
-	                    	for(k=0; k<e[0].legs[i].steps[j].path.length; k++) {
-	                    		path.push(e[0].legs[i].steps[j].path[k]);
-	                    	}
-	                    }
-	                }
-	                polyLines.push({ rideIndex: <%= ride.id %>, polyline:
-	                	new google.maps.Polyline({
-					    	path: path
-				    	})
-	            	}); 
-	            }
-	        });
-		<% end %>	
-	<% end %>
 </script>

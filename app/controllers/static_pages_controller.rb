@@ -1,9 +1,9 @@
 class StaticPagesController < ApplicationController
   def home
-  	@rides = rides 
-    @completed_count = completed_count 
-    @future_count = @rides.length
-    @inactive_count = inactive_count
+  	@rides_count = Ride.all.count 
+    @rides_shared_count = RideTransaction.all.count 
+    @money = 'XXX'
+    @fuel = 'YYY'
   end
 
   def contact

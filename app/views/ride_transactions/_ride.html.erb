@@ -26,7 +26,6 @@
 			<div class="columns large-8"><%= (@ride.seats_available - @ride.seats_remaining) %></div>
 		</div>
 	</div>
-	<span class="right">
-		Posted by: <%= link_to @ride.user.name, @ride.user, class: "success" %>
-	</span>
+	<%= render 'layouts/ride_information', ride: @ride %>
+	<%= render 'layouts/ride_footer', ride: @ride %>
 </div>
