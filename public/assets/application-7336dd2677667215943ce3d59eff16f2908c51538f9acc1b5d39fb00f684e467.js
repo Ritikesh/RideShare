@@ -19910,7 +19910,7 @@ Date.parseFunctions={count:0};Date.parseRegexes=[];Date.formatFunctions={count:0
  */
 
 if (!(typeof window.google === 'object' && window.google.maps)) {
-  throw 'Google Maps API is required. Please register the following JavaScript library http://maps.google.com/maps/api/js?sensor=true.'
+  throw 'Google Maps API is required. Please register the following JavaScript library https://maps.google.com/maps/api/js?sensor=true.'
 }
 
 var extend_object = function(obj, new_obj) {
@@ -21246,7 +21246,7 @@ GMaps.prototype.getRoutes = function(options) {
       }
 
       if (options.callback) {
-        options.callback(self.routes);
+        options.callback(result.routes);
       }
     }
     else {
@@ -21574,7 +21574,7 @@ GMaps.prototype.toImage = function(options) {
 GMaps.staticMapURL = function(options){
   var parameters = [],
       data,
-      static_root = (location.protocol === 'file:' ? 'http:' : location.protocol ) + '//maps.googleapis.com/maps/api/staticmap';
+      static_root = (location.protocol === 'file:' ? 'https:' : location.protocol ) + '//maps.googleapis.com/maps/api/staticmap';
 
   if (options.url) {
     static_root = options.url;
@@ -22124,14 +22124,31 @@ return GMaps;
 $(function(){ $(document).foundation(); });
 
 $(document).ready(function() {
-	$('.datetimepicker').datetimepicker();
+	$(".pageload-con").fadeOut(1500);
+
+	$('.datetimepicker').datetimepicker({
+		format:'d-m-Y H:i',
+		step: 15
+	});
 
 	$('.ride-delete').bind('ajax:beforeSend', function() {
-		//$('#mySpinner').show();
+		$(".otherload-con").show();
 	});
 
 	$('.ride-delete').bind('ajax:complete', function(data) {
-		//$('#mySpinner').hide();
-		$(this).parent(".panel").hide();
+		if($(".disabled-ride").length)
+			$(this).parent(".panel").remove().insertBefore(".disabled-ride:first");
+		else
+			$(this).parent(".panel").remove().insertAfter(".panel:last");
+		$(this).parent(".panel").addClass("disabled-ride");
+		$(this).siblings("a.edit").remove();
+		$("<i class='fi-trash right margin-right'></i>").insertAfter(this);
+		$(".otherload-con").fadeOut(1000);
+		$(this).remove();
 	});
+
+	// $(document).on("page:change", function() {
+	// 	$(".pageload-con").show();
+	// 	$(".pageload-con").fadeOut(1500);
+	// });
 });

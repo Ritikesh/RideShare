@@ -6,12 +6,6 @@ class RideTransactionsController < ApplicationController
 	def index
 		@ride_transactions  = ride_transactions current_user.id
 		@inactive_ride_transactions = inactive_ride_transactions current_user.id
-
-		if @ride_transactions.length || @inactive_ride_transactions.length
-		    @completed_count = completed_transaction_count current_user.id
-		    @future_count = future_transaction_count current_user.id
-		    @inactive_count = inactive_transaction_count current_user.id
-		end
 	end
 
 	def new
@@ -22,17 +16,10 @@ class RideTransactionsController < ApplicationController
 		@ride = Ride.find_by_id(params[:ride_transaction][:ride_id])
 		if @ride
 			@ride_transaction = current_user.ride_transactions.build(ride_transaction_params)
-			# transactions
-			begin
-				# transactions?
-				if @ride_transaction.save && @ride.save
-					flash[:info] = "Ride share registered!"
-					redirect_to root_path
-				else
-					render 'new'
-				end
-			rescue ActiveRecord::RecordNotUnique
-				@ride_transaction.errors[:base] << "You can register only once/Ride."
+			if @ride_transaction.save
+				flash[:info] = "Ride share registered!"
+				redirect_to root_path
+			else
 				render 'new'
 			end
 		else
@@ -65,10 +52,7 @@ class RideTransactionsController < ApplicationController
 		if @ride_transaction.timeofride < Time.now
 			flash[:info] = "This ride has already been completed!"
 			redirect_to ride_transactions_path
-		elsif @ride_transaction.update_attribute("isactive", false) && @ride_transaction.ride.save
-			@completed_count = completed_transaction_count current_user.id
-		    @future_count = future_transaction_count current_user.id
-		    @inactive_count = inactive_transaction_count current_user.id
+		elsif @ride_transaction.update_attribute("isactive", false)
 			respond_to do |format|
 				format.html { redirect_to ride_transactions_path, info: "Ride canceled successfully." }
 				format.js 
@@ -81,7 +65,8 @@ class RideTransactionsController < ApplicationController
 	private
 		def ride_transaction_params
 			params.require(:ride_transaction).permit(:ride_id, :from_address, :to_address, :timeofride, 
-		        :from_latitude, :to_latitude, :from_longitude, :to_longitude, :timeofride)
+		        :from_latitude, :to_latitude, :from_longitude, :to_longitude, :timeofride, :distance,
+	        	:cost)
 		end
 
 		def correct_user

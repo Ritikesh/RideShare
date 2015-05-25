@@ -6,4 +6,12 @@ module ApplicationHelper
 			"RideShare | #{title}"
 		end
 	end
+
+	def money_saved
+		RideTransaction.where(["isactive = :v", {v: true}]).sum(:cost).round(2)
+	end
+
+	def fuel_saved
+		(RideTransaction.where(["isactive = :v", {v: true}]).sum(:distance) / 12).round(2)
+	end
 end

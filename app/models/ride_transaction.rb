@@ -14,6 +14,7 @@ class RideTransaction < ActiveRecord::Base
 	validates :to_longitude, numericality: true
 
 	validate :validate_timeofride
+	before_save :validate_existing_reg
 	before_save :seat_count
 
 	private
@@ -27,6 +28,21 @@ class RideTransaction < ActiveRecord::Base
 		def seat_count
 			ride = Ride.find(self.ride_id)
 			# total seats must be greater than allotted seats
-			return ride.seats_available > ride.ride_transactions.count
+			if ride.seats_available > ride.ride_transactions.count
+				ride.save
+			else
+				return false
+			end
+		end
+
+		def validate_existing_reg
+			ride_transactions = RideTransaction.where(["user_id = :u and ride_id = :v and isactive = :w", {
+				u: self.user_id, v: self.ride_id, w: true }]).count
+			if ride_transactions > 0
+				self.errors[:base] << "You can have only one acive registration/ride."
+				return false
+			else
+				return true
+			end
 		end
 end

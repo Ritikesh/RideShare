@@ -51,11 +51,6 @@ class RidesController < ApplicationController
   def index
     @rides = rides current_user.id
     @inactive_rides = inactive_rides current_user.id
-    if @rides.length || @inactive_rides.length
-      @completed_count = completed_count current_user.id
-      @future_count = future_count current_user.id
-      @inactive_count = inactive_count current_user.id
-    end
   end
 
   def destroy
@@ -65,9 +60,6 @@ class RidesController < ApplicationController
       redirect_to rides_path
     elsif @ride.update_attribute("isactive", false)
       @ride.ride_transactions.update_all(isactive: false)
-      @future_count = future_count current_user.id
-      @inactive_count = inactive_count current_user.id
-      @completed_count = completed_count current_user.id
       respond_to do |format|
         format.html { redirect_to rides_path, info: "Ride canceled successfully." }
         format.js 

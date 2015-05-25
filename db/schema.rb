@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150522063025) do
+ActiveRecord::Schema.define(version: 20150525095804) do
 
   create_table "ride_transactions", force: :cascade do |t|
     t.integer  "ride_id",        limit: 4
@@ -26,9 +26,11 @@ ActiveRecord::Schema.define(version: 20150522063025) do
     t.float    "to_longitude",   limit: 24
     t.boolean  "isactive",       limit: 1,   default: true
     t.datetime "timeofride"
+    t.float    "distance",       limit: 24
+    t.float    "cost",           limit: 24
   end
 
-  add_index "ride_transactions", ["user_id", "ride_id"], name: "index_ride_transactions_on_user_id_and_ride_id", unique: true, using: :btree
+  add_index "ride_transactions", ["user_id", "ride_id"], name: "index_ride_transactions_on_user_id_and_ride_id", using: :btree
 
   create_table "rides", force: :cascade do |t|
     t.string   "from_address",    limit: 255

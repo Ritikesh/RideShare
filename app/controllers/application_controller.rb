@@ -3,9 +3,8 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
 	protect_from_forgery with: :exception
 	helper_method :current_user_session, :current_user, :require_user, :require_no_user,
-		:redirect_back_or_default, :store_location, :inactive_count, :completed_count, 
-		:future_count, :future_transaction_count, :completed_transaction_count, 
-		:rides #, :rides_for_transaction
+		:redirect_back_or_default, :store_location, :rides, :rides_search, :inactive_rides,
+		:ride_transactions, :inactive_ride_transactions
 
 	private
 	    def current_user_session
@@ -44,64 +43,6 @@ class ApplicationController < ActionController::Base
 			redirect_to(session[:return_to] || default)
 			session[:return_to] = nil
 		end
-
-		def inactive_count(userid = nil)
-	      	if userid
-	      		Ride.where(["isactive = :t and user_id = :u",
-	          		{t: false, u: userid}]).count
-	      	else
-	      		Ride.where(["isactive = :t", {t: false}]).count
-	      	end
-	    end
-
-	    def future_count(userid = nil)
-	    	if userid
-	      		Ride.where(["isactive = :t and user_id = :u and timeofride > :v", 
-	          		{t: true, u: userid, v: Time.now}]).count
-	      	else
-	      		Ride.where(["isactive = :t and timeofride > :u", 
-	      			{t: true, u: Time.now}]).count
-	      	end
-	    end
-
-	    def completed_count(userid = nil)
-	    	if userid
-	      		Ride.where(["isactive = :t and user_id = :u and timeofride < :v", 
-        	  		{t: true, u: userid, v: Time.now}]).count
-	      	else
-	      		Ride.where(["isactive = :t and timeofride < :u", 
-	      			{t: true, u: Time.now}]).count
-	      	end
-	    end
-
-		def inactive_transaction_count(userid = nil)
-	      	if userid
-	      		RideTransaction.where(["isactive = :t and user_id = :u",
-	          		{t: false, u: userid}]).count
-	      	else
-	      		RideTransaction.where(["isactive = :t", {t: false}]).count
-	      	end
-	    end
-
-	    def future_transaction_count(userid = nil)
-	    	if userid
-	      		RideTransaction.where(["isactive = :t and user_id = :u and timeofride > :v", 
-	          		{t: true, u: userid, v: Time.now}]).count
-	      	else
-	      		RideTransaction.where(["isactive = :t and timeofride > :u", 
-	      			{t: true, u: Time.now}]).count
-	      	end
-	    end
-
-	    def completed_transaction_count(userid = nil)
-	    	if userid
-	      		RideTransaction.where(["isactive = :t and user_id = :u and timeofride < :v", 
-        	  		{t: true, u: userid, v: Time.now}]).count
-	      	else
-	      		RideTransaction.where(["isactive = :t and timeofride < :u", 
-	      			{t: true, u: Time.now}]).count
-	      	end
-	    end
 
 	    def rides_search(timeofride)
 	    	before = timeofride.to_time - 60*60
