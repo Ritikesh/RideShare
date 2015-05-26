@@ -1,4 +1,4 @@
-<% if (@completed_count + @future_count) == 0 %>
+<% if (completed_count(current_user.id) + future_count(current_user.id)) == 0 %>
 	$("body").html("<script>window.location = '<%= rides_path %>'</script>")
 <% else %>
 	$("#totalCount").html('<%= (inactive_count(current_user.id) + completed_count(current_user.id) + future_count(current_user.id)) %>');

@@ -1,5 +1,9 @@
 <% content_for :title, "Book Ride" %>
 <% content_for :heading, "Book a Ride" %>
+<% content_for :styles do %>
+	<link href='http://fonts.googleapis.com/css?family=Slabo+27px' rel='stylesheet' type='text/css'>
+<% end %>
+
 <div class="row">
 	<div id="box-alert" class="alert-box columns large-8 large-centered info" data-alert>
 		<span id="alert-text" class="subheader">
@@ -33,19 +37,18 @@
 			<% end %>
 		<% end %>
 
-		<%= content_tag :div, class: "row" do %>
-			<%= content_tag :div, class: "large-10 columns" do %>
-				<%= f.label :distance %>
-				<%= f.text_field :distance, required: true, readonly: true %>
-			<% end %>
-		<% end %>
-		<%= content_tag :div, class: "row" do %>
-			<%= content_tag :div, class: "large-10 columns" do %>
-				<%= f.label :cost %>
-				<%= f.text_field :cost, required: true, readonly: true %>
-			<% end %>
-		<% end %>
+		<div class="row margin-bottom">
+			<div class="columns large-5" id="ride_transaction_Cost">
+				Cost: <span>0</span>
+			</div>
+			<div class="columns large-5" id="ride_transaction_Distance">
+				Distance: <span>0</span>
+			</div>
+			<div class="large-2"></div>
+		</div>
 
+		<%= f.hidden_field :distance %>
+		<%= f.hidden_field :cost %>
 		<%= f.hidden_field :from_latitude %>
 		<%= f.hidden_field :from_longitude %>
 		<%= f.hidden_field :to_latitude %>
@@ -54,8 +57,8 @@
 
 		<%= content_tag :div, class: "row" do %>
 			<%= content_tag :div, class: "large-10 columns" do %>
-				<button type="button" disabled class="button radius tiny" id="updateMarkers">Update Markers </button>
-				<button type="button" disabled id="getRoute" class="button radius tiny">Get Route</button>
+				<button type="button" disabled class="button radius tiny margin-right" id="updateMarkers">Update Markers </button>
+				<button type="button" disabled id="getRoute" class="button radius tiny margin-right">Get Route</button>
 				<%= f.button "Search", type: "button", id:"Search", class: "button tiny radius", disabled: true %>
 			<% end %>
 		<% end %>
@@ -289,6 +292,8 @@
 				distance = distance/1000;
 				$("#ride_transaction_distance").val(distance);
 				$("#ride_transaction_cost").val(distance * 5);
+				$("#ride_transaction_Distance > span").html(distance.toFixed(2) + " km.");
+				$("#ride_transaction_Cost > span").html("Rs. " + (distance * 5).toFixed(2) + "/-");
 				$("#Search").removeAttr("disabled");
             }
         });

@@ -9440,44 +9440,59 @@ th.hide-for-touch {
   }
 }
 /* line 1, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+body {
+  font-family: calibri;
+}
+
+/* line 5, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 h1, h2, h3 {
   margin: 1% 3% 0%;
 }
 
-/* line 5, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 9, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+label {
+  font-weight: bolder;
+}
+
+/* line 13, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+input {
+  font-weight: bold;
+}
+
+/* line 17, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 footer {
   margin-top: 20px;
 }
-/* line 6, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 18, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 footer hr {
   width: 90%;
   margin-left: auto;
   margin-right: auto;
 }
-/* line 12, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 24, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 footer p {
   margin: 0%;
 }
 
-/* line 17, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 29, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 input[type="text"][readonly] {
   background-color: #fff;
 }
 
-/* line 22, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 34, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .top-bar ul.title-area li i {
   font-size: 1.50rem;
 }
-/* line 24, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 36, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .top-bar ul.title-area li i:hover {
   font-size: 3.00rem;
 }
-/* line 29, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 41, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .top-bar li:hover i {
   font-size: 2.00rem;
 }
 
-/* line 35, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 47, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 #homeImage {
   background-image: url(/assets/HomeImage-12b4968f61a6b5244fe68d8744d8e9c41ec714da4e20ec54ef8194beff235f7e.jpg);
   background-repeat: no-repeat;
@@ -9485,7 +9500,7 @@ input[type="text"][readonly] {
   width: 200px;
 }
 
-/* line 42, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 54, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 #map {
   min-height: 250px;
   height: 500px;
@@ -9495,73 +9510,120 @@ input[type="text"][readonly] {
   max-width: 600px;
 }
 
-/* line 51, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 63, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .panel-heading {
-  color: #069;
+  color: red;
+  font-weight: bold;
   border-bottom: 1px solid #999;
 }
 
-/* line 56, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 69, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .panel .button {
   margin: 5% 35% 2%;
 }
 
-/* line 60, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 73, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.panel.callout.disabled-ride {
+  background: #EEE;
+}
+/* line 75, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.panel.callout.disabled-ride i {
+  color: #999;
+}
+
+/* line 80, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .margin-left {
   margin-left: 2%;
 }
 
-/* line 64, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 84, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .margin-right {
   margin-right: 2%;
 }
 
-/* line 68, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 88, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .margin-top {
   margin-top: 2%;
 }
 
-/* line 72, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 92, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .margin-bottom {
   margin-bottom: 2%;
 }
 
-/* line 76, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 96, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .page {
   max-height: 90vh;
   overflow-y: scroll;
 }
 
-/* line 81, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 101, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.fullpage {
+  height: 100vh;
+  width: 100vw;
+  margin: 0px;
+  padding: 0px;
+}
+
+/* line 108, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.stat-container {
+  padding: 20% 10%;
+}
+
+/* line 112, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.stat-tab {
+  font-family: 'Slabo 27px', serif;
+  background-color: white;
+  border: 1px solid #F88;
+  box-shadow: 0 0 5px #F88;
+  color: #069;
+  height: 100px;
+  width: 200px;
+}
+/* line 120, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.stat-tab:hover {
+  box-shadow: 0 0 10px #F88;
+}
+/* line 123, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.stat-tab h4 {
+  font-size: 30px;
+}
+/* line 126, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.stat-tab p {
+  font-size: 15px;
+  color: orange;
+}
+
+/* line 132, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 #ride-list-container {
   max-height: 50vh;
   overflow-y: scroll;
 }
 
-/* line 86, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 137, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .page::-webkit-scrollbar, #ride-list-container::-webkit-scrollbar {
   display: none;
 }
 
-/* line 91, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 142, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .panel .fi-check {
   color: green;
 }
-/* line 95, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 146, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .panel .fi-x-circle {
   color: #900;
 }
-/* line 99, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 150, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .panel .fi-pencil {
   color: #666;
 }
-/* line 103, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 154, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .panel .fi-checkbox {
   color: #069;
 }
 
-/* line 108, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
-.pageload-con, .searchload-con, .otherload-con {
+/* line 159, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.pageload-con, .otherload-con {
   position: fixed;
   left: 0px;
   top: 0px;
@@ -9570,59 +9632,101 @@ input[type="text"][readonly] {
   z-index: 9999;
 }
 
-/* line 117, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 168, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .pageload-con {
   background: url(/assets/Preloader_11-fc7241a61208a44e77cf61cca18aafac2931621c0cd904714c1ad43f7c4660d9.gif) center no-repeat #EEE;
 }
 
-/* line 121, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
-.searchload-con {
-  background: url(/assets/working-395eb5491fbd475b4a84ac6a2ca21930ead8c7a332b5486e46149a0938816cbb.gif) center no-repeat #EEE;
-}
-
-/* line 125, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 172, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .otherload-con {
   background: url(/assets/Preloader_10-2897359fe1288623c6810bef4e4feb5ad42f6d80d14b1b04ee849c94521d139b.gif) center no-repeat #EEE;
+}
+
+/* line 176, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+#ride-mates {
+  background: url(/assets/images-2fc87668f75348d24f5519f97f206835f5b9a93bef3befb47266f22bf0afae96.jpg) no-repeat center center fixed;
+  height: 90vh;
+  width: 100vw;
+}
+
+/* line 182, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+#word {
+  background: url(/assets/word-861c0dd14eb396347d8507c11aae946ba4c3f351ab52fad0820f093ca33e8242.jpg) no-repeat center center fixed;
+  height: 90vh;
+  width: 100vw;
+}
+
+/* line 188, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+#rideincarpool {
+  background: url(/assets/rideincarpool-0e914559ea56f218566aa42133d71d1218193d187af956a5a03116011479bc5a.png) no-repeat center center fixed;
+  height: 90vh;
+  width: 100vw;
+}
+
+/* line 194, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+#ride_transaction_Cost, #ride_transaction_Distance {
+  font-family: 'Slabo 27px', serif;
+  font-size: 20px;
+}
+/* line 197, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+#ride_transaction_Cost span, #ride_transaction_Distance span {
+  font-size: 20px;
+  color: orange;
 }
 /* line 1, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+body {
+  font-family: calibri;
+}
+
+/* line 5, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 h1, h2, h3 {
   margin: 1% 3% 0%;
 }
 
-/* line 5, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 9, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+label {
+  font-weight: bolder;
+}
+
+/* line 13, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+input {
+  font-weight: bold;
+}
+
+/* line 17, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 footer {
   margin-top: 20px;
 }
-/* line 6, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 18, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 footer hr {
   width: 90%;
   margin-left: auto;
   margin-right: auto;
 }
-/* line 12, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 24, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 footer p {
   margin: 0%;
 }
 
-/* line 17, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 29, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 input[type="text"][readonly] {
   background-color: #fff;
 }
 
-/* line 22, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 34, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .top-bar ul.title-area li i {
   font-size: 1.50rem;
 }
-/* line 24, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 36, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .top-bar ul.title-area li i:hover {
   font-size: 3.00rem;
 }
-/* line 29, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 41, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .top-bar li:hover i {
   font-size: 2.00rem;
 }
 
-/* line 35, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 47, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 #homeImage {
   background-image: url(/assets/HomeImage-12b4968f61a6b5244fe68d8744d8e9c41ec714da4e20ec54ef8194beff235f7e.jpg);
   background-repeat: no-repeat;
@@ -9630,7 +9734,7 @@ input[type="text"][readonly] {
   width: 200px;
 }
 
-/* line 42, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 54, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 #map {
   min-height: 250px;
   height: 500px;
@@ -9640,73 +9744,120 @@ input[type="text"][readonly] {
   max-width: 600px;
 }
 
-/* line 51, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 63, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .panel-heading {
-  color: #069;
+  color: red;
+  font-weight: bold;
   border-bottom: 1px solid #999;
 }
 
-/* line 56, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 69, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .panel .button {
   margin: 5% 35% 2%;
 }
 
-/* line 60, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 73, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.panel.callout.disabled-ride {
+  background: #EEE;
+}
+/* line 75, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.panel.callout.disabled-ride i {
+  color: #999;
+}
+
+/* line 80, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .margin-left {
   margin-left: 2%;
 }
 
-/* line 64, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 84, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .margin-right {
   margin-right: 2%;
 }
 
-/* line 68, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 88, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .margin-top {
   margin-top: 2%;
 }
 
-/* line 72, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 92, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .margin-bottom {
   margin-bottom: 2%;
 }
 
-/* line 76, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 96, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .page {
   max-height: 90vh;
   overflow-y: scroll;
 }
 
-/* line 81, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 101, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.fullpage {
+  height: 100vh;
+  width: 100vw;
+  margin: 0px;
+  padding: 0px;
+}
+
+/* line 108, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.stat-container {
+  padding: 20% 10%;
+}
+
+/* line 112, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.stat-tab {
+  font-family: 'Slabo 27px', serif;
+  background-color: white;
+  border: 1px solid #F88;
+  box-shadow: 0 0 5px #F88;
+  color: #069;
+  height: 100px;
+  width: 200px;
+}
+/* line 120, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.stat-tab:hover {
+  box-shadow: 0 0 10px #F88;
+}
+/* line 123, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.stat-tab h4 {
+  font-size: 30px;
+}
+/* line 126, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.stat-tab p {
+  font-size: 15px;
+  color: orange;
+}
+
+/* line 132, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 #ride-list-container {
   max-height: 50vh;
   overflow-y: scroll;
 }
 
-/* line 86, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 137, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .page::-webkit-scrollbar, #ride-list-container::-webkit-scrollbar {
   display: none;
 }
 
-/* line 91, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 142, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .panel .fi-check {
   color: green;
 }
-/* line 95, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 146, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .panel .fi-x-circle {
   color: #900;
 }
-/* line 99, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 150, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .panel .fi-pencil {
   color: #666;
 }
-/* line 103, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 154, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .panel .fi-checkbox {
   color: #069;
 }
 
-/* line 108, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
-.pageload-con, .searchload-con, .otherload-con {
+/* line 159, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.pageload-con, .otherload-con {
   position: fixed;
   left: 0px;
   top: 0px;
@@ -9715,19 +9866,46 @@ input[type="text"][readonly] {
   z-index: 9999;
 }
 
-/* line 117, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 168, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .pageload-con {
   background: url(/assets/Preloader_11-fc7241a61208a44e77cf61cca18aafac2931621c0cd904714c1ad43f7c4660d9.gif) center no-repeat #EEE;
 }
 
-/* line 121, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
-.searchload-con {
-  background: url(/assets/working-395eb5491fbd475b4a84ac6a2ca21930ead8c7a332b5486e46149a0938816cbb.gif) center no-repeat #EEE;
-}
-
-/* line 125, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 172, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .otherload-con {
   background: url(/assets/Preloader_10-2897359fe1288623c6810bef4e4feb5ad42f6d80d14b1b04ee849c94521d139b.gif) center no-repeat #EEE;
+}
+
+/* line 176, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+#ride-mates {
+  background: url(/assets/images-2fc87668f75348d24f5519f97f206835f5b9a93bef3befb47266f22bf0afae96.jpg) no-repeat center center fixed;
+  height: 90vh;
+  width: 100vw;
+}
+
+/* line 182, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+#word {
+  background: url(/assets/word-861c0dd14eb396347d8507c11aae946ba4c3f351ab52fad0820f093ca33e8242.jpg) no-repeat center center fixed;
+  height: 90vh;
+  width: 100vw;
+}
+
+/* line 188, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+#rideincarpool {
+  background: url(/assets/rideincarpool-0e914559ea56f218566aa42133d71d1218193d187af956a5a03116011479bc5a.png) no-repeat center center fixed;
+  height: 90vh;
+  width: 100vw;
+}
+
+/* line 194, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+#ride_transaction_Cost, #ride_transaction_Distance {
+  font-family: 'Slabo 27px', serif;
+  font-size: 20px;
+}
+/* line 197, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+#ride_transaction_Cost span, #ride_transaction_Distance span {
+  font-size: 20px;
+  color: orange;
 }
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
@@ -19187,44 +19365,59 @@ th.hide-for-touch {
   }
 }
 /* line 1, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+body {
+  font-family: calibri;
+}
+
+/* line 5, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 h1, h2, h3 {
   margin: 1% 3% 0%;
 }
 
-/* line 5, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 9, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+label {
+  font-weight: bolder;
+}
+
+/* line 13, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+input {
+  font-weight: bold;
+}
+
+/* line 17, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 footer {
   margin-top: 20px;
 }
-/* line 6, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 18, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 footer hr {
   width: 90%;
   margin-left: auto;
   margin-right: auto;
 }
-/* line 12, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 24, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 footer p {
   margin: 0%;
 }
 
-/* line 17, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 29, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 input[type="text"][readonly] {
   background-color: #fff;
 }
 
-/* line 22, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 34, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .top-bar ul.title-area li i {
   font-size: 1.50rem;
 }
-/* line 24, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 36, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .top-bar ul.title-area li i:hover {
   font-size: 3.00rem;
 }
-/* line 29, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 41, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .top-bar li:hover i {
   font-size: 2.00rem;
 }
 
-/* line 35, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 47, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 #homeImage {
   background-image: url(/assets/HomeImage-12b4968f61a6b5244fe68d8744d8e9c41ec714da4e20ec54ef8194beff235f7e.jpg);
   background-repeat: no-repeat;
@@ -19232,7 +19425,7 @@ input[type="text"][readonly] {
   width: 200px;
 }
 
-/* line 42, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 54, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 #map {
   min-height: 250px;
   height: 500px;
@@ -19242,73 +19435,120 @@ input[type="text"][readonly] {
   max-width: 600px;
 }
 
-/* line 51, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 63, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .panel-heading {
-  color: #069;
+  color: red;
+  font-weight: bold;
   border-bottom: 1px solid #999;
 }
 
-/* line 56, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 69, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .panel .button {
   margin: 5% 35% 2%;
 }
 
-/* line 60, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 73, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.panel.callout.disabled-ride {
+  background: #EEE;
+}
+/* line 75, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.panel.callout.disabled-ride i {
+  color: #999;
+}
+
+/* line 80, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .margin-left {
   margin-left: 2%;
 }
 
-/* line 64, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 84, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .margin-right {
   margin-right: 2%;
 }
 
-/* line 68, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 88, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .margin-top {
   margin-top: 2%;
 }
 
-/* line 72, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 92, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .margin-bottom {
   margin-bottom: 2%;
 }
 
-/* line 76, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 96, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .page {
   max-height: 90vh;
   overflow-y: scroll;
 }
 
-/* line 81, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 101, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.fullpage {
+  height: 100vh;
+  width: 100vw;
+  margin: 0px;
+  padding: 0px;
+}
+
+/* line 108, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.stat-container {
+  padding: 20% 10%;
+}
+
+/* line 112, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.stat-tab {
+  font-family: 'Slabo 27px', serif;
+  background-color: white;
+  border: 1px solid #F88;
+  box-shadow: 0 0 5px #F88;
+  color: #069;
+  height: 100px;
+  width: 200px;
+}
+/* line 120, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.stat-tab:hover {
+  box-shadow: 0 0 10px #F88;
+}
+/* line 123, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.stat-tab h4 {
+  font-size: 30px;
+}
+/* line 126, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.stat-tab p {
+  font-size: 15px;
+  color: orange;
+}
+
+/* line 132, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 #ride-list-container {
   max-height: 50vh;
   overflow-y: scroll;
 }
 
-/* line 86, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 137, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .page::-webkit-scrollbar, #ride-list-container::-webkit-scrollbar {
   display: none;
 }
 
-/* line 91, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 142, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .panel .fi-check {
   color: green;
 }
-/* line 95, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 146, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .panel .fi-x-circle {
   color: #900;
 }
-/* line 99, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 150, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .panel .fi-pencil {
   color: #666;
 }
-/* line 103, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 154, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .panel .fi-checkbox {
   color: #069;
 }
 
-/* line 108, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
-.pageload-con, .searchload-con, .otherload-con {
+/* line 159, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+.pageload-con, .otherload-con {
   position: fixed;
   left: 0px;
   top: 0px;
@@ -19317,19 +19557,46 @@ input[type="text"][readonly] {
   z-index: 9999;
 }
 
-/* line 117, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 168, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .pageload-con {
   background: url(/assets/Preloader_11-fc7241a61208a44e77cf61cca18aafac2931621c0cd904714c1ad43f7c4660d9.gif) center no-repeat #EEE;
 }
 
-/* line 121, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
-.searchload-con {
-  background: url(/assets/working-395eb5491fbd475b4a84ac6a2ca21930ead8c7a332b5486e46149a0938816cbb.gif) center no-repeat #EEE;
-}
-
-/* line 125, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+/* line 172, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
 .otherload-con {
   background: url(/assets/Preloader_10-2897359fe1288623c6810bef4e4feb5ad42f6d80d14b1b04ee849c94521d139b.gif) center no-repeat #EEE;
+}
+
+/* line 176, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+#ride-mates {
+  background: url(/assets/images-2fc87668f75348d24f5519f97f206835f5b9a93bef3befb47266f22bf0afae96.jpg) no-repeat center center fixed;
+  height: 90vh;
+  width: 100vw;
+}
+
+/* line 182, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+#word {
+  background: url(/assets/word-861c0dd14eb396347d8507c11aae946ba4c3f351ab52fad0820f093ca33e8242.jpg) no-repeat center center fixed;
+  height: 90vh;
+  width: 100vw;
+}
+
+/* line 188, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+#rideincarpool {
+  background: url(/assets/rideincarpool-0e914559ea56f218566aa42133d71d1218193d187af956a5a03116011479bc5a.png) no-repeat center center fixed;
+  height: 90vh;
+  width: 100vw;
+}
+
+/* line 194, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+#ride_transaction_Cost, #ride_transaction_Distance {
+  font-family: 'Slabo 27px', serif;
+  font-size: 20px;
+}
+/* line 197, /Users/user/Rails_Projects/rideshare/app/assets/stylesheets/overrides.scss */
+#ride_transaction_Cost span, #ride_transaction_Distance span {
+  font-size: 20px;
+  color: orange;
 }
 
 /*

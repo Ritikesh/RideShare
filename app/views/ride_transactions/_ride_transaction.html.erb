@@ -14,15 +14,6 @@
 		<i class="fi-clock"></i> 
 		<%= ride_transaction.timeofride.to_time.strftime("%A, %d-%m-%Y %H:%M, %Z") %>
 	</p>
-	<div class="row">
-		<div class="row">
-			<div class="columns large-4"><%= link_to "Pick up from:", "#"%></div>
-			<div class="columns large-8"><%= ride_transaction.from_address %></div>
-		</div>
-		<div class="row">
-			<div class="columns large-4 "><%= link_to "Drop to:", "#"%> </div>
-			<div class="columns large-8"><%= ride_transaction.to_address %> </div>
-		</div>
-	</div>
+	<%= render 'layouts/ride_transaction_information', ride_transaction: ride_transaction %>
 	<%= render 'layouts/ride_footer', ride: ride_transaction.ride %>
 </div>

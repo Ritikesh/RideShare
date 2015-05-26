@@ -19,7 +19,7 @@ class RidesController < ApplicationController
 
   def show
     @ride = Ride.find_by_id(params[:id])
-    if @ride
+    if @ride && @ride.isactive
       @ride_transactions = @ride.ride_transactions.where("isactive = :v", {v: true})
       render 'show'
     else
@@ -30,8 +30,7 @@ class RidesController < ApplicationController
   def edit
     @ride = Ride.find_by_id(params[:id])
     if not @ride.isactive 
-      flash[:info] = "This ride has been canceled by you!"
-      redirect_to root_path
+      render file: 'public/404.html', status: 404
     elsif @ride.timeofride < Time.now
       flash[:info] = "This ride has already been completed!"
       redirect_to root_path

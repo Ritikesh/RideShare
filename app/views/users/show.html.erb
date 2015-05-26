@@ -4,11 +4,14 @@
 	<div class="columns large-6">
 		<%= gravatar_for @user, 150 %>	
 		<span>
-			<%= @user.name %>
-			&lt;<%= @user.email %>&gt;
+			<strong><%= @user.name %></strong>, <%= @user.email %>
 		</span>
 	</div>
 	<div class="columns large-4 large-offset-2">
-		<%= render 'rides/stats' %>
+		<div class="callout panel radius">
+			<p class="text-center panel-heading"> RideShare Statistics - User </p>
+			<%= render 'rides/stats' %> <hr>
+			<%= render 'ride_transactions/stats' %>
+		</div>
 	</div>
 </div>

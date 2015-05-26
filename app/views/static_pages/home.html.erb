@@ -1,3 +1,7 @@
+<% content_for :styles do %>
+	<link href='http://fonts.googleapis.com/css?family=Slabo+27px' rel='stylesheet' type='text/css'>
+<% end %>
+
 <div class="fullpage">
 	<div id="word">
 		
@@ -7,38 +11,38 @@
 <div class="fullpage text-center">
 	<div class="stat-container">
 		<div class="columns large-3">
-			<div class="panel radius stat-tab margin-left">
-				<h5><%= @rides_count %></h5>
-				<span>Rides Posted</span>
+			<div class="panel radius stat-tab th margin-left">
+				<h4><%= rides_count %></h4> 
+				<p>Rides Posted</p>
 			</div>
 		</div>
 		<div class="columns large-3">
-			<div class="panel radius stat-tab margin-left">
-				<h5><%= @rides_shared_count %></h5>
-				<span>Rides Shared</span>
+			<div class="panel radius stat-tab th margin-left">
+				<h4><%= rides_shared_count %></h4>
+				<p>Rides Shared</p>
 			</div>
 		</div>
 		<div class="columns large-3">
-			<div class="panel radius stat-tab margin-left">
-				<h5>Rs. <%= money_saved %></h5>
-				<span>Saved</span>
+			<div class="panel radius stat-tab th margin-left">
+				<h4>Rs. <%= money_saved %></h4>
+				<p>Saved</p>
 			</div>
 		</div>
 		<div class="columns large-3">
-			<div class="panel radius stat-tab margin-left">
-				<h5><%= fuel_saved %> ltrs</h5>
-				<span>of Fuel Saved</span>
+			<div class="panel radius stat-tab th margin-left">
+				<h4><%= fuel_saved %> ltrs</h4>
+				<p>of Fuel Saved</p>
 			</div>
 		</div>
 	</div>
 </div>
 
-<div class="fullpage">
+<!-- <div class="fullpage">
 	<div id="ride-mates">
 		
 	</div>
 </div>
-
+ -->
 <div class="fullpage">
 	<a href="<%= current_user ? new_ride_transaction_path : login_path %>"><div id="rideincarpool">
 		

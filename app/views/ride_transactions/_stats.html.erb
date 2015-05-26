@@ -1,21 +1,18 @@
-<div class="callout panel radius">
-	<p class="text-center panel-heading"> RideShare Statistics - Bookings </p>
+<div class="row">
 	<div class="row">
-		<div class="row">
-			<div class="columns large-8"><%= link_to "Total Rides", ""%></div>
-			<div id="totalCount" class="columns large-4"><%= inactive_transaction_count(current_user.id) + completed_transaction_count(current_user.id) + future_transaction_count(current_user.id) %></div>
-		</div>
-		<div class="row">
-			<div class="columns large-8"><%= link_to "Completed Rides", ""%> </div>
-			<div id="completedCount" class="columns large-4"><%= completed_transaction_count(current_user.id) %> </div>
-		</div>
-		<div class="row">
-			<div class="columns large-8"><%= link_to "Cancelled Rides", ""%> </div>
-			<div id="inactiveCount" class="columns large-4"><%= inactive_transaction_count(current_user.id) %> </div>
-		</div>
-		<div class="row">
-			<div class="columns large-8"><%= link_to "Future Rides", ""%> </div>
-			<div id="futureCount" class="columns large-4"><%= future_transaction_count(current_user.id) %></div>
-		</div>
+		<div class="columns large-8"><%= link_to "Total Rides Booked", ""%></div>
+		<div id="totalCount" class="columns large-4"><%= inactive_transaction_count(current_user.id) + completed_transaction_count(current_user.id) + future_transaction_count(current_user.id) %></div>
+	</div>
+	<div class="row">
+		<div class="columns large-8"><%= link_to "Completed Booked Rides", ""%> </div>
+		<div id="completedCount" class="columns large-4"><%= completed_transaction_count(current_user.id) %> </div>
+	</div>
+	<div class="row">
+		<div class="columns large-8"><%= link_to "Cancelled Booked Rides", ""%> </div>
+		<div id="inactiveCount" class="columns large-4"><%= inactive_transaction_count(current_user.id) %> </div>
+	</div>
+	<div class="row">
+		<div class="columns large-8"><%= link_to "Future Booked Rides", ""%> </div>
+		<div id="futureCount" class="columns large-4"><%= future_transaction_count(current_user.id) %></div>
 	</div>
 </div>

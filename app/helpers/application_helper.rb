@@ -12,6 +12,6 @@ module ApplicationHelper
 	end
 
 	def fuel_saved
-		(RideTransaction.where(["isactive = :v", {v: true}]).sum(:distance) / 12).round(2)
+		(RideTransaction.where(["isactive = :v", {v: true}]).sum(:distance) / 10).round(2)
 	end
 end
