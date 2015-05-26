@@ -43,7 +43,7 @@ class RideTransaction < ActiveRecord::Base
 			ride_transactions = RideTransaction.where(["user_id = :u and ride_id = :v and isactive = :w", {
 				u: self.user_id, v: self.ride_id, w: true }]).count
 			if ride_transactions > 0
-				self.errors[:base] << "You can have only one acive registration/ride."
+				self.errors[:base] << "You can have only one active registration/ride."
 				return false
 			else
 				return true

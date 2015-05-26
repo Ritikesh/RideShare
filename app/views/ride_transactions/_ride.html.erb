@@ -1,5 +1,5 @@
 <div class="callout panel radius">
-	<%= link_to "<i class='fi-checkbox'></i>".html_safe, '#', class: "right margin-right margin-bottom bookRide", data: {rideid: @ride.id} %>
+	<%= link_to "<i class='fi-social-foursquare' title='Book now'></i>".html_safe, '#', class: "right margin-right margin-bottom bookRide", data: {rideid: @ride.id} %>
 	<p class="text-center panel-heading">
 		<i class="fi-clock"></i> 
 		<%= @ride.timeofride.to_time.strftime("%A, %d-%m-%Y %H:%M, %Z") %>

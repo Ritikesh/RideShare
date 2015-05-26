@@ -1,3 +1,3 @@
 <span class="right margin-right">
-	Posted by: <%= link_to ride.user.name, ride.user, class: "success" %> | <%= link_to "Ride Details", ride %>
+	<%= link_to ride.user.name, ride.user, class: "ride-footer-text" %> | <%= link_to "<i class='fi-info' title='Ride information'></i>".html_safe, ride %>
 </span>

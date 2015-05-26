@@ -48,7 +48,8 @@ class ApplicationController < ActionController::Base
 	    	before = timeofride.to_time - 60*60
 	    	after = timeofride.to_time + 60*60
 	    	rides = Ride.where("isactive = :t and timeofride between :u and :v and 
-	    		seats_remaining > :w", {t: true, u:before, v: after, w: 0})
+	    		seats_remaining > :w and user_id <> :x", 
+	    		{t: true, u: before, v: after, w: 0, x: current_user.id})
 	    end
 
 	    def rides(userid = nil)
