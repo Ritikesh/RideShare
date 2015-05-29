@@ -65,7 +65,7 @@
 
 		<div class="hide" id="norow-container">
 			<div class="callout panel radius">
-				<p class="text-center"><i class="fi-burst large"></i> Snap! <i class="fi-burst large"></i></p>
+				<p class="text-center"> Snap! </p>
 				There are no rides based on your locations, YET! <br>Please come back later to book one..
 			</div>
 		</div>
@@ -161,8 +161,8 @@
 
 		$.each(polyLines, function(index, value){
 			 var poly = value.polyline;
-			if( google.maps.geometry.poly.isLocationOnEdge(a, poly, 0.020) &&
-				google.maps.geometry.poly.isLocationOnEdge(b, poly, 0.020) )
+			if( google.maps.geometry.poly.isLocationOnEdge(a, poly, 0.010) &&
+				google.maps.geometry.poly.isLocationOnEdge(b, poly, 0.010) )
 			{
 				flag = false;
 	  			$.get("/ride_transactions/getRideData/"+value.rideIndex ,function(data){

@@ -1,9 +1,9 @@
 <div class="callout panel radius">
-	<%= link_to "<i class='fi-social-foursquare' title='Book now'></i>".html_safe, '#', class: "right margin-right margin-bottom bookRide", data: {rideid: @ride.id} %>
+	<%= link_to fa_icon("check-square"), '#', class: "right margin-right margin-bottom bookRide", data: {rideid: @ride.id} %>
 	<p class="text-center panel-heading">
-		<i class="fi-clock"></i> 
+		<%= fa_icon "clock-o" %>
 		<%= @ride.timeofride.to_time.strftime("%A, %d-%m-%Y %H:%M, %Z") %>
 	</p>
-	<%= render 'layouts/ride_information', ride: @ride %>
+<%= render 'layouts/ride_information', ride: @ride %>
 	<%= render 'layouts/ride_footer', ride: @ride %>
 </div>

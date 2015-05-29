@@ -4,9 +4,8 @@
 	<% if @ride_transactions.length == 0 %>
 		<div class="columns large-6 large-centered">
 			<div class="callout panel radius">
-				<p class="text-center"><i class="fi-burst large"></i> Snap! <i class="fi-burst large"></i></p>
-					Nobody has shared your ride yet. Kindly check back after sometime on any updates. <br>
-					You can share this page and have your friends register for the ride to share it with them.
+				<p class="text-center"> Snap! </p>
+					Nobody has shared your ride yet. Kindly check back after sometime on any updates.
 			</div>
 		</div>
 	<% else %>
@@ -27,7 +26,7 @@
 			<% @ride_transactions.each do | ride_transaction | %>
 				<div class="panel callout radius">
 					<p class="text-center panel-heading">
-						<i class="fi-clock"></i> 
+						<%= fa_icon "clock-o" %>
 						<%= ride_transaction.timeofride.to_time.strftime("%A, %d-%m-%Y %H:%M, %Z") %>
 					</p>
 					<%= render 'layouts/ride_transaction_information', ride_transaction: ride_transaction %>

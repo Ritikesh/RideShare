@@ -4,9 +4,8 @@
 	<% if @ride_transactions.length == 0 && @inactive_ride_transactions.length == 0 %>
 		<div class="columns large-6 large-centered">
 			<div class="callout panel radius">
-				<p class="text-center"><i class="fi-burst large"></i> Snap! <i class="fi-burst large"></i></p>
-				You have not booked a ride, YET! There's always a first time.., 
-				<%= link_to "Book Ride", new_ride_transaction_path, class: "button tiny primary" %>
+				<p class="text-center"> Snap! </p>
+				You have not booked a ride, YET! There's always a first time..,<%= link_to "Book Ride", new_ride_transaction_path %>
 			</div>
 		</div>
 	<% else %>

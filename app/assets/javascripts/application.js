@@ -40,7 +40,7 @@ $(document).ready(function() {
 			$(this).parent(".panel").remove().insertAfter(".panel:last");
 		$(this).parent(".panel").addClass("disabled-ride");
 		$(this).siblings("a.edit").remove();
-		$("<i class='fi-trash right margin-right'></i>").insertAfter(this);
+		$("<i class='fa fa-trash-o lg right margin-right'></i>").insertAfter(this);
 		$(".otherload-con").fadeOut(1000);
 		$(this).remove();
 	});

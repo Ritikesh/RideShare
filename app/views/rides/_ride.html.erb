@@ -2,17 +2,17 @@
 	<% if ride.isactive %>
 		<% if current_user && ride.user_id == current_user.id %>
 			<% if ride.timeofride > Time.now %>
-				<%= link_to "<i class='fi-x-circle'></i>".html_safe, ride, class: "ride-delete right", method: :delete, remote: true %>
-				<%= link_to "<i class='fi-pencil'></i>".html_safe, edit_ride_path(ride), class: "right edit margin-right" %>
+				<%= link_to fa_icon("minus-circle"), ride, class: "ride-delete right", method: :delete, remote: true %>
+				<%= link_to fa_icon("pencil"), edit_ride_path(ride), class: "right edit margin-right" %>
 			<% else %>
-				<%= link_to "<i class='fi-check'></i>".html_safe, "#", class: "right margin-right" %>
+				<%= link_to fa_icon("check"), "#", class: "right margin-right" %>
 			<% end %>
 		<% end %>
 	<% else %>
-		<i class='fi-trash right margin-right'></i>
+		<%= fa_icon("trash", class: "right margin-right") %>
 	<% end %>
 	<p class="text-center panel-heading">
-		<i class="fi-clock"></i> 
+		<%= fa_icon "clock-o" %>
 		<%= ride.timeofride.to_time.strftime("%A, %d-%m-%Y %H:%M, %Z") %>
 	</p>
 	<%= render 'layouts/ride_information', ride: ride %>

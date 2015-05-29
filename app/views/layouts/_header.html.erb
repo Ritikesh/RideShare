@@ -4,7 +4,7 @@
       <ul class="title-area">
         <li class="name">
           <h1>
-            <%= link_to ("<i class='fi-home'></i>").html_safe, root_path, class: "item" %>
+            <%= link_to fa_icon("home 3x"), root_path, class: "item" %>
           </h1>
         </li>
         <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
@@ -13,31 +13,30 @@
       <section class="top-bar-section">
         <ul class="right">
         <% if current_user %>
-          <li> <%= link_to ("<i class='fi-plus'></i>").html_safe, new_ride_path, {title: "Post ride"} %></li> 
-          <li> <%= link_to ("<i class='fi-list-thumbnails'></i>").html_safe, rides_path, {title: "My Posted Rides"} %></li> 
+          <li> <%= link_to fa_icon("car", text: " Post Ride"), new_ride_path %></li> 
+          <li> <%= link_to fa_icon("list-alt", text: " My Rides"), rides_path %></li> 
+
           <li class="divider"> </li>
-          <li> <%= link_to ("<i class='fi-plus'></i>").html_safe, new_ride_transaction_path, {title: "Book ride"} %></li> 
-          <li> <%= link_to ("<i class='fi-thumbnails'></i>").html_safe, ride_transactions_path, {title: "My Booked Rides"} %></li> 
+          
+          <li> <%= link_to fa_icon("taxi", text: " Book Ride"), new_ride_transaction_path %></li> 
+          <li> <%= link_to fa_icon("list", text: " My Bookings"), ride_transactions_path %></li> 
+          
           <li class="divider"> </li>
           
           <li class="has-dropdown"> 
             <a href="#"><%= current_user.name %></a>
             <ul class="dropdown">
-              <li> <%= link_to "Account", account_path %> </li>
-              <li> <%= link_to "Settings", edit_account_path %> </li>
-              <li> <%= link_to "Logout", logout_path, {title: "Logout"} %> </li>
+              <li> <%= link_to fa_icon("user", text: " Account"), account_path %> </li>
+              <li> <%= link_to fa_icon("cog spin", text: " Settings"), edit_account_path %> </li>
+              <li> <%= link_to fa_icon("sign-out", text: " Logout"), logout_path %> </li>
             </ul>
           </li>
         <% else %>
-          <li> <%= link_to ("<i class='fi-torsos'></i>").html_safe, new_user_path, {title: "Register"} %> </li>
-          <li> <%= link_to ("<i class='fi-torso'></i>").html_safe, login_path, {title: "Login"} %> </li>
+          <li> <%= link_to fa_icon("user-plus lg", text: " Register"), new_user_path, {title: "Register"} %> </li>
+          <li class="divider"> </li>
+          <li> <%= link_to fa_icon("sign-in lg", text: " Sign in"), login_path, {title: "Login"} %> </li>
         <% end %>
         </ul>
-
-        <!-- Left Nav Section 
-        <ul class="left">
-          <li><a href="#">Left Nav Button</a></li>
-        </ul>-->
       </section>
     </nav>
   </div>

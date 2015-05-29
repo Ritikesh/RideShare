@@ -12,8 +12,7 @@
  *
  *= require_tree .
  *= require_self
+ *= require foundation_and_overrides
+ *= require font-awesome
  *= require jquery.datetimepicker
  */
-
-@import "foundation_and_overrides";
-@import 'foundation-icons';
