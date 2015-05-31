@@ -15,14 +15,12 @@ input {
 }
 
 footer {
-	hr {
-		width: 90%;
-		margin-left:auto;
-		margin-right: auto;
-	}
-	margin-top: 20px;
+	width: 100%;
+	background-color: #333;
+	padding: 10%;
 	p {
 		margin: 0%;
+		color: #DDD;
 	}
 }
 
@@ -30,32 +28,28 @@ input[type="text"][readonly] {
 	background-color: #fff;
 }
 
-#homeImage {
-	background-image: image-url("HomeImage.jpg");
-	background-repeat: no-repeat;
-	height: 160px;
-	width: 200px;
+.panel.callout {
+	background: #333333;
+	color: #DDD;
+	font-weight: normal;
 }
 
-#map {
-	min-height: 250px;
-	height: 500px;
-	max-height: 600px;
-	min-width: 250px;
-	width: 500px;
-	max-width: 600px;
+.margin-left {
+	margin-left: 2%;
 }
 
-.panel .button {
-	margin: 5% 35% 2%;
+.margin-right {
+	margin-right: 2%;
 }
 
-.panel.callout.disabled-ride {
-	background: #CCC;
-	i, p, div, span, a, a:hover {
-		color: #999;
-	}
+.margin-top {
+	margin-top: 2%;
 }
+
+.margin-bottom {
+	margin-bottom: 2%;
+}
+
 .panel {
 	.fa-check {
 		color: #0D0;
@@ -78,10 +72,11 @@ input[type="text"][readonly] {
 	}
 }
 
-.panel.callout {
-	background: #333333;
-	color: #DDD;
-	font-weight: normal;
+.panel.callout.disabled-ride {
+	background: #CCC;
+	i, p, div, span, a, a:hover {
+		color: #999;
+	}
 }
 
 .panel.callout.error-container {
@@ -101,22 +96,6 @@ input[type="text"][readonly] {
 	border-bottom: 1px solid #999;
 }
 
-.margin-left {
-	margin-left: 2%;
-}
-
-.margin-right {
-	margin-right: 2%;
-}
-
-.margin-top {
-	margin-top: 2%;
-}
-
-.margin-bottom {
-	margin-bottom: 2%;
-}
-
 .fullpage {
 	height: 100vh;
 	width: 100vw;	
@@ -124,8 +103,13 @@ input[type="text"][readonly] {
 	padding: 0px;
 }
 
+.users li {
+	padding: 3%;
+	border-bottom: 1px solid #999;
+}
+
 .stat-container {
-	padding: 20% 10%;
+	padding: 10%;
 }
 
 .stat-tab {
@@ -133,10 +117,10 @@ input[type="text"][readonly] {
 	background-color: #333333;
 	border: 1px solid #00aeef;
     box-shadow: 0 0 1px #00aeef;
-    height: 100px;
+    height: 300px;
     width: 200px;
 	font-weight: normal;
-	
+	padding: 33% 10%;
     &:hover {
     	box-shadow: 0 0 8px #00aeef;
     }
@@ -148,13 +132,22 @@ input[type="text"][readonly] {
     p {
 		font-family: 'Slabo 27px', serif;
     	font-size: 15px;
-    	color: #00aeef;
+    	color: #999;
     }
 }
 
 .page {
 	max-height: 90vh;
 	overflow-y: scroll;
+}
+
+#map {
+	min-height: 250px;
+	height: 500px;
+	max-height: 600px;
+	min-width: 250px;
+	width: 500px;
+	max-width: 600px;
 }
 
 #ride-list-container {

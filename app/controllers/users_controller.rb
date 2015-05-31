@@ -20,6 +20,11 @@ class UsersController < ApplicationController
     @user = params[:id] ? User.find(params[:id]) : current_user
   end
 
+  def index
+    @users = User.page(params[:page]) 
+    # @users = User.where(isactive: true)
+  end
+
   def edit
     @user = current_user
   end

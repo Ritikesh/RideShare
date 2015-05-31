@@ -1,5 +1,6 @@
+<!-- Customize error messages using I18n. Eg: login/register -->
 <% if object.errors.any? %>
-	<ul class="error-container panel callout no-bullet">
+	<ul class="error-container panel callout">
 		<% object.errors.messages.each do |key,msgs| %>
 			<% msgs.each do |msg| %>
     			<li><%= msg %></li>

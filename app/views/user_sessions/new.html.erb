@@ -1,8 +1,8 @@
 <% content_for :title, "Signin" %>
 <% content_for :heading, "Signin" %>
 
-<%= form_for @user, url: user_session_path do |f| %>  
-	<%= render 'layouts/error_messages', object: @user %>
+<%= form_for @user_session, url: user_session_path do |f| %>  
+	<%= render 'layouts/error_messages', object: @user_session %>
 	<%= content_tag :div, class: "row" do %>
 		<%= content_tag :div, class: "large-4 large-offset-2 columns" do %>
 			<%= f.label :email %>

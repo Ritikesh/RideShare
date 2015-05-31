@@ -13,14 +13,27 @@
       <section class="top-bar-section">
         <ul class="right">
         <% if current_user %>
-          <li> <%= link_to fa_icon("car", text: " Post Ride"), new_ride_path %></li> 
-          <li> <%= link_to fa_icon("list-alt", text: " My Rides"), rides_path %></li> 
+          <li class="has-dropdown"> 
+            <%= link_to fa_icon("bell", text: " Notifications"), "#" %>
+            <ul class="dropdown">
+            </ul>
+          </li>
+          <li class="has-dropdown"> 
+            <%= link_to fa_icon("share-square-o", text: " RideShare"), "#" %>
+            <ul class="dropdown">
+              <li> <%= link_to fa_icon("users", text: " Users"), users_path %></li> 
 
-          <li class="divider"> </li>
-          
-          <li> <%= link_to fa_icon("taxi", text: " Book Ride"), new_ride_transaction_path %></li> 
-          <li> <%= link_to fa_icon("list", text: " My Bookings"), ride_transactions_path %></li> 
-          
+              <li class="divider"> </li>
+              
+              <li> <%= link_to fa_icon("car", text: " Post Ride"), new_ride_path %></li> 
+              <li> <%= link_to fa_icon("list-alt", text: " My Rides"), rides_path %></li> 
+
+              <li class="divider"> </li>
+              
+              <li> <%= link_to fa_icon("taxi", text: " Book Ride"), new_ride_transaction_path %></li> 
+              <li> <%= link_to fa_icon("list", text: " My Bookings"), ride_transactions_path %></li> 
+            </ul>
+          </li>
           <li class="divider"> </li>
           
           <li class="has-dropdown"> 

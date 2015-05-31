@@ -2,10 +2,7 @@
 <% content_for :heading, "Profile - " + @user.name %>
 <div class="row margin-top">
 	<div class="columns large-6">
-		<%= gravatar_for @user, 150 %>	
-		<span>
-			<strong><%= @user.name %></strong>, <%= @user.email %>
-		</span>
+		<%= render 'user', size: 150, user: @user %>
 	</div>
 	<div class="columns large-4 large-offset-2">
 		<div class="callout panel radius">

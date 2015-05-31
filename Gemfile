@@ -13,9 +13,11 @@ gem 'coffee-rails', '~> 4.1.0'
 # gem 'therubyracer', platforms: :ruby
 gem 'authlogic', '3.4.5'
 gem 'foundation-rails', '5.5.2.1'
+gem 'will_paginate-foundation', '5.3.4'
 gem 'font-awesome-rails', '4.3.0.0'
 gem 'jquery-datetimepicker-rails', '2.4.1.0'
 gem 'jquery-turbolinks', '2.1.0'
+gem 'faker', '1.4.3'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
