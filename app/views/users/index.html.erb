@@ -2,11 +2,11 @@
 <% content_for :title, "Users" %>
 <% content_for :heading, "Users" %>
 <div class="row margin-top">
-	<div class="columns large-6">
+	<div class="columns large-12">
 		<%= will_paginate @users, renderer: FoundationPagination::Rails %>
 		<ul class="users no-bullet">
 			<% @users.each do |user| %>
-				<li><%= render 'user', size: 75, user: user %></li>
+				<li><%= link_to (render 'user', size: 75, user: user), user %></li>
 			<% end %>
 		</ul>
 		<%= will_paginate @users, renderer: FoundationPagination::Rails %>

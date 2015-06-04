@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :require_no_user, only: [:new, :create]
-  before_filter :require_user, only: [:show, :edit, :update]
+  before_filter :require_user, only: [:show, :edit, :update, :following, :followers]
   
   def new
     @user = User.new
@@ -37,6 +37,20 @@ class UsersController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def following
+    @title = "Following"
+    @user  = params[:id] ? User.find(params[:id]) : current_user
+    @users = @user.following.paginate(page: params[:page], per_page: 7) 
+    render 'show_follow'
+  end
+
+  def followers
+    @title = "Followers"
+    @user  = params[:id] ? User.find(params[:id]) : current_user
+    @users = @user.followers.paginate(page: params[:page], per_page: 7) 
+    render 'show_follow'
   end
 
   private

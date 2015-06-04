@@ -29,11 +29,22 @@ Rails.application.routes.draw do
 
   get '/ride_transactions/search' => 'ride_transactions#search'
 
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
+
+  resource :account, :controller => "users" do
+    member do
+      get :following, :followers
+    end
+  end
+  
   resource :user_session, only: [:create, :new, :destroy]  
-  resource :account, :controller => "users"
-  resources :users
   resources :rides
   resources :ride_transactions
+  resources :relationships, only: [:create, :destroy]
   # Example resource route with options:
   #   resources :products do
   #     member do

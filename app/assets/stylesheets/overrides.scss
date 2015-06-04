@@ -32,22 +32,26 @@ input[type="text"][readonly] {
 	background: #333333;
 	color: #DDD;
 	font-weight: normal;
+	hr {
+		margin: 3px;
+		padding: 0px;
+	}
 }
 
 .margin-left {
-	margin-left: 2%;
+	margin-left: 2% !important;
 }
 
 .margin-right {
-	margin-right: 2%;
+	margin-right: 2% !important;
 }
 
 .margin-top {
-	margin-top: 2%;
+	margin-top: 2% !important;
 }
 
 .margin-bottom {
-	margin-bottom: 2%;
+	margin-bottom: 2% !important;
 }
 
 .panel {
@@ -82,7 +86,6 @@ input[type="text"][readonly] {
 .panel.callout.error-container {
 	padding: 5px;
 	margin: 0px 0px 20px 0px;
-
 	li {
 		font-size: 15px;
 		color: #F27D0C;
@@ -103,9 +106,24 @@ input[type="text"][readonly] {
 	padding: 0px;
 }
 
+.gravatar {
+	background-color: #999;
+	border-radius: 50%;
+	-webkit-border-radius: 150px;
+	-moz-border-radius: 150px;
+	box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	-webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	-moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+}
+
 .users li {
 	padding: 3%;
 	border-bottom: 1px solid #999;
+}
+
+.follow_unfollow {
+	padding: 5px;
+	margin: 0px;	
 }
 
 .stat-container {

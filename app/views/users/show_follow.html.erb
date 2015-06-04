@@ -1,0 +1,25 @@
+<% provide(:title, @title) %>
+<div class="row margin-top">
+  <div class="columns large-4 panel callout">
+    <div class="row">
+      <div class="columns large-11 large-offset-1">
+        <%= link_to (render 'user', size: 75, user: @user), @user %>
+      </div>
+    </div> <hr>
+    <div class="row">
+      <%= render 'stats' %>
+    </div>
+  </div>
+
+  <div class="columns large-8">
+    <h3><%= @title %></h3>
+    <% if @users.any? %>
+      <ul class="users no-bullet">
+        <% @users.each do |user| %>
+          <li><%= link_to (render 'user', size: 50, user: user), user %></li>
+        <% end %>
+      </ul>
+      <%= will_paginate @users, renderer: FoundationPagination::Rails %>
+    <% end %>
+  </div>
+</div>
