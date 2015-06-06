@@ -1,0 +1,38 @@
+<% content_for :styles do %>
+	<link href='http://fonts.googleapis.com/css?family=Slabo+27px' rel='stylesheet' type='text/css'>
+<% end %>
+<% content_for :script do %>
+	<script type="text/javascript">
+	$(document).on("page:change", function() {
+		$('#calendar').fullCalendar({
+	        header: {
+				left:   'title',
+				center: '',
+				right:  'agendaWeek month prevYear prev,next nextYear'
+	        },
+	        //aspectRatio: 1.35,
+	        defaultView: "agendaWeek",
+	        selectable: true,
+	       	events: [
+		        {
+		            title: 'Event1',
+		            start: '2015-06-05'
+		        },
+		        {
+		            title: 'Event2',
+		            start: '2015-06-05'
+		        }
+		        // etc...
+		    ],
+		    color: 'yellow',   // an option!
+		    textColor: 'black' // an option!
+	    });
+    });
+    </script>
+<% end %>
+<div class="row">
+	<div class="columns large-10 ">
+		<div id="calendar">	
+		</div>
+	</div>
+</div>

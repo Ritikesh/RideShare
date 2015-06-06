@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     member do
       get :following, :followers
     end
+    get 'search', on: :collection
   end
 
   resource :account, :controller => "users" do

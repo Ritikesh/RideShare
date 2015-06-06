@@ -1,5 +1,10 @@
 class StaticPagesController < ApplicationController
   def home
+  	if current_user
+  		render 'userhome'
+  	else
+  		render 'home'
+  	end
   end
 
   def contact
@@ -10,4 +15,5 @@ class StaticPagesController < ApplicationController
 
   def help
   end
+
 end

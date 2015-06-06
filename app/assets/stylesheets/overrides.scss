@@ -38,6 +38,13 @@ input[type="text"][readonly] {
 	}
 }
 
+.level {
+	vertical-align: middle;
+	.pagination {
+		margin-bottom: auto;
+	}
+}
+
 .margin-left {
 	margin-left: 2% !important;
 }
@@ -114,6 +121,12 @@ input[type="text"][readonly] {
 	box-shadow: 0 0 8px rgba(0, 0, 0, .8);
 	-webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
 	-moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	~ span {
+		white-space: nowrap;
+	}
+	div & {
+		display: block;
+	}
 }
 
 .users li {

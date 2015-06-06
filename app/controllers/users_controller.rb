@@ -21,8 +21,16 @@ class UsersController < ApplicationController
   end
 
   def index
+    @title = "Users"
     @users = User.page(params[:page]) 
     # @users = User.where(isactive: true)
+  end
+
+  def search
+    @title = "Search user"
+    @search = params[:search]
+    @users = User.where(["name like :t", {t: "%#{@search}%"}]).page(params[:page])
+    render 'index'
   end
 
   def edit

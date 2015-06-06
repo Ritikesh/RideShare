@@ -16,6 +16,8 @@
 //= require foundation
 //= require turbolinks
 //= require jquery.datetimepicker
+//= require moment
+//= require fullcalendar
 //= require gmaps
 //= require_tree .
 
